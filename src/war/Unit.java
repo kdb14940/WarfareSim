@@ -1,5 +1,7 @@
 package war;
 
+import java.util.Random;
+
 public class Unit {
 
     private String name;
@@ -63,11 +65,8 @@ public class Unit {
      */
     public void calculateCost(){
         //additions
-        cost += attackBonus;
-        cost += powerBonus;
-        cost += defenseBonus - 10;
-        cost += toughnessBonus - 10;
-        cost += (2 * moraleBonus);
+        cost = 0;
+        cost = attackBonus + powerBonus + defenseBonus + toughnessBonus + (2 * moraleBonus);
 
         //multipliers
         switch(size){
@@ -87,6 +86,11 @@ public class Unit {
         cost *= unitType.getCostModifier();
         cost *= 10;
         cost += 30;
+    }
+
+    public int rollSizeDie(){
+        Random rand = new Random();
+        return rand.nextInt(size) + 1;
     }
 
     public String getName() {

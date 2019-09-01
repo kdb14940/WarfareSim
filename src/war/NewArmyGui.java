@@ -33,6 +33,7 @@ public class NewArmyGui{
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("New Army Creation");
 
+        //variables
         listOfUnits = new LinkedList<>();
         VBox unitsView = new VBox();
         Button newUnitButton = new Button("Add New Unit");
@@ -42,11 +43,12 @@ public class NewArmyGui{
         unitsView.getChildren().add(armyName);
         unitsView.getChildren().add(unitsLabel);
 
+        //layout
         HBox layout = new HBox(50);
         layout.getChildren().addAll(unitsView, newUnitButton, saveButton);
         Scene scene = new Scene(layout, 800, 600);
 
-        //TODO Logic for adding units, button for saving
+        // Button for adding a new unit
         newUnitButton.setOnAction(e->{
             listOfUnits.add(NewUnitGui.display());
             unitsView.getChildren().clear();
@@ -54,6 +56,7 @@ public class NewArmyGui{
             window.setScene(scene);
         });
 
+        //button to save army to file and exit screen
         saveButton.setOnAction(e->
         {
             if(!armyName.getText().equals("Enter Army Name Here")){

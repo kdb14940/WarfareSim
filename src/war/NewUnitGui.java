@@ -39,6 +39,7 @@ public class NewUnitGui{
         Button saveButton = new Button("Save Unit");
         TextField nameField = new TextField("Enter Name Here");
 
+        //choice boxes
         ChoiceBox<Type> typeChoiceBox = createTypeChoiceBox();
         ChoiceBox<Equipment> equipmentChoiceBox = createEquipmentChoiceBox();
         ChoiceBox<Experience> experienceChoiceBox = createExperienceChoiceBox();
@@ -60,6 +61,8 @@ public class NewUnitGui{
         TextField toughnessField = new TextField("0");
         TextField moraleField = new TextField("0");
 
+        //button to save all inputted information to a unit
+        //TODO input validation
         saveButton.setOnAction(e->{
             StringBuilder name = new StringBuilder();
             if(!nameField.getText().equals("Enter Name Here")) {
@@ -82,6 +85,7 @@ public class NewUnitGui{
             window.close();
         });
 
+        //layouts
         HBox layout = new HBox(30);
         VBox nameLayout = new VBox();
         VBox typeLayout = new VBox();
@@ -102,7 +106,6 @@ public class NewUnitGui{
 
         Scene scene = new Scene(layout, 800,600);
 
-        //TODO Logic for adding units, button for saving
         window.setScene(scene);
         window.showAndWait();
         return unit;

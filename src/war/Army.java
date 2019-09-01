@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Scanner;
 
 import static war.Type.*;
@@ -152,6 +153,159 @@ public class Army {
             units.add(tempUnit);
         }
         updateBasePower();
+    }
+
+    public int getPyrrhicCasualties(boolean winner){
+        int totalCasualties = 0;
+        for(Unit unit : units){
+            if(unit.getUnitType() == Type.LEVIES){
+                totalCasualties += unit.rollSizeDie();
+            }
+            else if(unit.getUnitType() == INFANTRY && winner){
+                totalCasualties += unit.rollSizeDie();
+            }
+        }
+        return totalCasualties;
+    }
+
+    public int getMinorCasualties(boolean winner){
+        int totalCasualties = 0;
+        for(Unit unit : units){
+            if(unit.getUnitType() == Type.LEVIES && winner){
+                totalCasualties += unit.rollSizeDie();
+            }
+            else if(unit.getUnitType() == INFANTRY ){
+                totalCasualties += unit.rollSizeDie();
+            }
+            else if(unit.getUnitType() == ARCHERS ){
+                totalCasualties += unit.rollSizeDie();
+            }
+        }
+        return totalCasualties;
+    }
+
+    public int getClearCasualties(boolean winner) {
+        int totalCasualties = 0;
+        for (Unit unit : units) {
+            if (unit.getUnitType() == Type.LEVIES && winner) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == INFANTRY && winner) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == ARCHERS) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == Type.CAVALRY) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == FLYING) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == SIEGE_ENGINE && winner) {
+                totalCasualties += unit.rollSizeDie();
+            }
+        }
+        return totalCasualties;
+    }
+
+    public int getMajorCasualties(boolean winner) {
+        int totalCasualties = 0;
+        for (Unit unit : units) {
+            if (unit.getUnitType() == Type.LEVIES && winner) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == INFANTRY && winner) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == ARCHERS && winner) {
+                totalCasualties += unit.rollSizeDie();
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == ARCHERS && !winner){
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == Type.CAVALRY && winner) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == FLYING && winner) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == SIEGE_ENGINE && winner) {
+                totalCasualties += unit.rollSizeDie();
+            }
+        }
+        return totalCasualties;
+    }
+
+    public int getRoutCasualties(boolean winner) {
+        int totalCasualties = 0;
+        for (Unit unit : units) {
+            if (unit.getUnitType() == Type.LEVIES && winner) {
+                totalCasualties += unit.rollSizeDie();
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == INFANTRY && winner) {
+                totalCasualties += unit.rollSizeDie();
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == ARCHERS && winner) {
+                totalCasualties += unit.rollSizeDie();
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == Type.CAVALRY ) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == FLYING ) {
+                totalCasualties += unit.rollSizeDie();
+            } else if (unit.getUnitType() == SIEGE_ENGINE && winner) {
+                totalCasualties += unit.rollSizeDie();
+            }
+        }
+        return totalCasualties;
+    }
+
+    public LinkedList<String> inflictCasualties(int casualtiesInflicted){
+        LinkedList<String> deathList = new LinkedList<>();
+        while(casualtiesInflicted > 0 ){
+            for(int i = 0 ; i < 6; i++){
+                for(int j = 0; j < units.size();j++) {
+
+                    if (casualtiesInflicted <= 0) {
+                        break;
+                    } else {
+                        if(i == 0 && units.get(j).getUnitType() == LEVIES)
+                        {
+                            casualtiesInflicted -= units.get(j).getSize();
+                            deathList.add(units.get(j).getName());
+                            removeUnit(j);
+                            j--;
+                        }
+                        else if(i == 1 && units.get(j).getUnitType() == INFANTRY)
+                        {
+                            casualtiesInflicted -= units.get(j).getSize();
+                            deathList.add(units.get(j).getName());
+                            removeUnit(j);
+                            j--;
+                        }
+                        else if(i == 2 && units.get(j).getUnitType() == ARCHERS)
+                        {
+                            casualtiesInflicted -= units.get(j).getSize();
+                            deathList.add(units.get(j).getName());
+                            removeUnit(j);
+                            j--;
+                        }
+                        else if(i == 3 && units.get(j).getUnitType() == CAVALRY)
+                        {
+                            casualtiesInflicted -= units.get(j).getSize();
+                            deathList.add(units.get(j).getName());
+                            removeUnit(j);
+                            j--;
+                        }
+                        else if(i ==4 && units.get(j).getUnitType() == FLYING)
+                        {
+                            casualtiesInflicted -= units.get(j).getSize();
+                            deathList.add(units.get(j).getName());
+                            removeUnit(j);
+                            j--;
+                        }
+                        else if(i == 5 && units.get(j).getUnitType() == SIEGE_ENGINE)
+                        {
+                            casualtiesInflicted -= units.get(j).getSize();
+                            deathList.add(units.get(j).getName());
+                            removeUnit(j);
+                            j--;
+                        }
+                    }
+                }
+            }
+        }
+        return deathList;
     }
 
     public void addUnit(Unit tempUnit){
