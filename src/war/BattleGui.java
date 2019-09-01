@@ -28,6 +28,7 @@ public class BattleGui extends Application{
 
     private final String LISTPATH = "C://warfare/listOfArmies";
     private Stage window;
+    private Scene welcomeScene, battleScene;
     private Army army1;
     private Army army2;
     private int stratAdvantage1 = 0;
@@ -41,8 +42,16 @@ public class BattleGui extends Application{
     public void start(Stage primaryStage) throws Exception{
         window = primaryStage;
 
+        army1 = new Army();
+        army2 = new Army();
         welcomeScreen();
-        /**
+
+
+    }
+
+
+    private void welcomeScreen(){
+
         loadedChoices = new LinkedList<>();
         VBox army1Choices = new VBox(20);
         VBox army2Choices = new VBox(20);
@@ -75,6 +84,8 @@ public class BattleGui extends Application{
         Scene welcomeScene = new Scene(welcomeLayout, 800, 600);
 
         continueButton.setOnAction(e -> {
+
+            //TODO IF STATEMENT DOESNT WORK
             if(army1Label.getText() != null && army2Label.getText() != null)
             {
                 // create filepath from user choice
@@ -90,7 +101,8 @@ public class BattleGui extends Application{
                 catch(FileNotFoundException e2){
                     System.out.println("Army file not found!");
                 }
-                // TODO continue to next scene, EXCEPTION HANDLING
+                battle();
+                //TODO Exception handling
             }
         });
 
@@ -109,6 +121,10 @@ public class BattleGui extends Application{
             {
                 System.out.println("Armies list not found!");
             }
+            //clear choice boxes
+            army1Choicebox.getItems().clear();
+            army2Choicebox.getItems().clear();
+            //refill choice boxes
             for(String name : loadedChoices){
                 army1Choicebox.getItems().add(name);
                 army2Choicebox.getItems().add(name);
@@ -118,21 +134,10 @@ public class BattleGui extends Application{
 
         window.setScene(welcomeScene);
         window.show();
-         */
+    }
 
-
-
-        /**
+    private void battle(){
         //create armies
-        try {
-            //army1.addArmiesFromFile(FILEPATH1);
-            army2.addArmiesFromFile(FILEPATH2);
-        }
-        catch(Exception e)
-        {
-            System.out.println("File not found");
-        }
-
 
         Button nextButton = new Button("Next Round");
         Button advantageButton = new Button("Advantages");
@@ -195,100 +200,17 @@ public class BattleGui extends Application{
 
         HBox hBox = new HBox(15);
         hBox.getChildren().addAll(layout1,layout2,layout3,buttons,chart);
-        Scene start = new Scene(new StackPane(hBox),800, 800);
+        battleScene = new Scene(new StackPane(hBox),800, 800);
 
         backButton.setOnAction(e -> {
             stratAdvantage1 = Integer.parseInt(text1.getText());
             stratAdvantage2 = Integer.parseInt(text2.getText());
-            window.setScene(start);
+            window.setScene(battleScene);
         });
 
-        window.setScene(start);
-        window.show();
-         */
-    }
-
-
-    private void welcomeScreen(){
-
-        loadedChoices = new LinkedList<>();
-        VBox army1Choices = new VBox(20);
-        VBox army2Choices = new VBox(20);
-        Button continueButton = new Button("Continue");
-
-        Button newArmy = new Button ("Create New Army");
-        Label army1Label = new Label("Army 1");
-        Label army2Label = new Label("Army 2");
-
-        //Choiceboxes
-        ChoiceBox<String> army1Choicebox = new ChoiceBox<>();
-        ChoiceBox<String> army2Choicebox = new ChoiceBox<>();
-        try {
-            loadedChoices = loadArmyChoices();
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("Armies list not found!");
-        }
-        for(String name : loadedChoices){
-            army1Choicebox.getItems().add(name);
-            army2Choicebox.getItems().add(name);
-        }
-
-        army1Choices.getChildren().addAll(army1Label, army1Choicebox);
-        army2Choices.getChildren().addAll(army2Label, army2Choicebox);
-
-        HBox welcomeLayout = new HBox(10);
-        welcomeLayout.getChildren().addAll(army1Choices, army2Choices, newArmy, continueButton);
-        Scene welcomeScene = new Scene(welcomeLayout, 800, 600);
-
-        continueButton.setOnAction(e -> {
-            if(army1Label.getText() != null && army2Label.getText() != null)
-            {
-                // create filepath from user choice
-                StringBuilder filePath1 = new StringBuilder("C://warfare/");
-                StringBuilder filePath2 = new StringBuilder("C://warfare/");
-                filePath1.append(army1Choicebox.getValue());
-                filePath2.append(army2Choicebox.getValue());
-                // add armies from the designated file paths
-                try{
-                    army1.addArmiesFromFile(filePath1.toString());
-                    army2.addArmiesFromFile(filePath2.toString());
-                }
-                catch(FileNotFoundException e2){
-                    System.out.println("Army file not found!");
-                }
-                // TODO continue to next scene, EXCEPTION HANDLING
-                return;
-            }
-        });
-
-        newArmy.setOnAction(e->{
-            Army tempArmy = NewArmyGui.display();
-            try {
-                tempArmy.saveArmyToFile();
-            }
-            catch(IOException err){
-                System.out.println("Error writing army to file");
-            }
-            try {
-                loadedChoices = loadArmyChoices();
-            }
-            catch(FileNotFoundException err)
-            {
-                System.out.println("Armies list not found!");
-            }
-            for(String name : loadedChoices){
-                army1Choicebox.getItems().add(name);
-                army2Choicebox.getItems().add(name);
-            }
-            window.setScene(welcomeScene);
-        });
-
-        window.setScene(welcomeScene);
+        window.setScene(battleScene);
         window.show();
     }
-
 
     private LinkedList<String> loadArmyChoices() throws FileNotFoundException{
 

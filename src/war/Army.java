@@ -71,7 +71,7 @@ public class Army {
             writer.write(unit.getMoraleBonus() + "\n");
         }
         writer.close();
-        writer = new FileWriter(LISTPATH);
+        writer = new FileWriter(LISTPATH, true);
         writer.write(name + "\n");
         writer.close();
     }
