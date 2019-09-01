@@ -8,6 +8,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -15,27 +16,117 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class BattleGui extends Application{
 
-    final String FILEPATH1 = "resources/kingsford";
-    final String FILEPATH2 = "resources/dust";
-    int stratAdvantage1 = 0;
-    int stratAdvantage2 = 0;
+    private final String LISTPATH = "C://warfare/listOfArmies";
+    private Stage window;
+    private Army army1;
+    private Army army2;
+    private int stratAdvantage1 = 0;
+    private int stratAdvantage2 = 0;
+    LinkedList<String> loadedChoices;
 
     public static void main(String[] args){
         launch(args);
     }
 
-    public void start(Stage window) throws Exception{
-        Army army1 = new Army();
-        Army army2 = new Army();
+    public void start(Stage primaryStage) throws Exception{
+        window = primaryStage;
 
+        welcomeScreen();
+        /**
+        loadedChoices = new LinkedList<>();
+        VBox army1Choices = new VBox(20);
+        VBox army2Choices = new VBox(20);
+        Button continueButton = new Button("Continue");
+
+        Button newArmy = new Button ("Create New Army");
+        Label army1Label = new Label("Army 1");
+        Label army2Label = new Label("Army 2");
+
+        //Choiceboxes
+        ChoiceBox<String> army1Choicebox = new ChoiceBox<>();
+        ChoiceBox<String> army2Choicebox = new ChoiceBox<>();
         try {
-            army1.addArmmiesFromFile(FILEPATH1);
-            army2.addArmmiesFromFile(FILEPATH2);
+            loadedChoices = loadArmyChoices();
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("Armies list not found!");
+        }
+        for(String name : loadedChoices){
+            army1Choicebox.getItems().add(name);
+            army2Choicebox.getItems().add(name);
+        }
+
+        army1Choices.getChildren().addAll(army1Label, army1Choicebox);
+        army2Choices.getChildren().addAll(army2Label, army2Choicebox);
+
+        HBox welcomeLayout = new HBox(10);
+        welcomeLayout.getChildren().addAll(army1Choices, army2Choices, newArmy, continueButton);
+        Scene welcomeScene = new Scene(welcomeLayout, 800, 600);
+
+        continueButton.setOnAction(e -> {
+            if(army1Label.getText() != null && army2Label.getText() != null)
+            {
+                // create filepath from user choice
+                StringBuilder filePath1 = new StringBuilder("C://warfare/");
+                StringBuilder filePath2 = new StringBuilder("C://warfare/");
+                filePath1.append(army1Choicebox.getValue());
+                filePath2.append(army2Choicebox.getValue());
+                // add armies from the designated file paths
+                try{
+                    army1.addArmiesFromFile(filePath1.toString());
+                    army2.addArmiesFromFile(filePath2.toString());
+                }
+                catch(FileNotFoundException e2){
+                    System.out.println("Army file not found!");
+                }
+                // TODO continue to next scene, EXCEPTION HANDLING
+            }
+        });
+
+        newArmy.setOnAction(e->{
+            Army tempArmy = NewArmyGui.display();
+            try {
+                tempArmy.saveArmyToFile();
+            }
+            catch(IOException err){
+                System.out.println("Error writing army to file");
+            }
+            try {
+                loadedChoices = loadArmyChoices();
+            }
+            catch(FileNotFoundException err)
+            {
+                System.out.println("Armies list not found!");
+            }
+            for(String name : loadedChoices){
+                army1Choicebox.getItems().add(name);
+                army2Choicebox.getItems().add(name);
+            }
+            window.setScene(welcomeScene);
+        });
+
+        window.setScene(welcomeScene);
+        window.show();
+         */
+
+
+
+        /**
+        //create armies
+        try {
+            //army1.addArmiesFromFile(FILEPATH1);
+            army2.addArmiesFromFile(FILEPATH2);
         }
         catch(Exception e)
         {
@@ -86,7 +177,6 @@ public class BattleGui extends Application{
                     text2.setText(Integer.toString(stratAdvantage2));
                     window.setScene(advantageScene);
                 });
-        //backButton.setOnAction(e -> window.setScene(start));
 
         nextButton.setOnAction(e -> {
             layout1.getChildren().clear();
@@ -115,6 +205,104 @@ public class BattleGui extends Application{
 
         window.setScene(start);
         window.show();
+         */
+    }
+
+
+    private void welcomeScreen(){
+
+        loadedChoices = new LinkedList<>();
+        VBox army1Choices = new VBox(20);
+        VBox army2Choices = new VBox(20);
+        Button continueButton = new Button("Continue");
+
+        Button newArmy = new Button ("Create New Army");
+        Label army1Label = new Label("Army 1");
+        Label army2Label = new Label("Army 2");
+
+        //Choiceboxes
+        ChoiceBox<String> army1Choicebox = new ChoiceBox<>();
+        ChoiceBox<String> army2Choicebox = new ChoiceBox<>();
+        try {
+            loadedChoices = loadArmyChoices();
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("Armies list not found!");
+        }
+        for(String name : loadedChoices){
+            army1Choicebox.getItems().add(name);
+            army2Choicebox.getItems().add(name);
+        }
+
+        army1Choices.getChildren().addAll(army1Label, army1Choicebox);
+        army2Choices.getChildren().addAll(army2Label, army2Choicebox);
+
+        HBox welcomeLayout = new HBox(10);
+        welcomeLayout.getChildren().addAll(army1Choices, army2Choices, newArmy, continueButton);
+        Scene welcomeScene = new Scene(welcomeLayout, 800, 600);
+
+        continueButton.setOnAction(e -> {
+            if(army1Label.getText() != null && army2Label.getText() != null)
+            {
+                // create filepath from user choice
+                StringBuilder filePath1 = new StringBuilder("C://warfare/");
+                StringBuilder filePath2 = new StringBuilder("C://warfare/");
+                filePath1.append(army1Choicebox.getValue());
+                filePath2.append(army2Choicebox.getValue());
+                // add armies from the designated file paths
+                try{
+                    army1.addArmiesFromFile(filePath1.toString());
+                    army2.addArmiesFromFile(filePath2.toString());
+                }
+                catch(FileNotFoundException e2){
+                    System.out.println("Army file not found!");
+                }
+                // TODO continue to next scene, EXCEPTION HANDLING
+                return;
+            }
+        });
+
+        newArmy.setOnAction(e->{
+            Army tempArmy = NewArmyGui.display();
+            try {
+                tempArmy.saveArmyToFile();
+            }
+            catch(IOException err){
+                System.out.println("Error writing army to file");
+            }
+            try {
+                loadedChoices = loadArmyChoices();
+            }
+            catch(FileNotFoundException err)
+            {
+                System.out.println("Armies list not found!");
+            }
+            for(String name : loadedChoices){
+                army1Choicebox.getItems().add(name);
+                army2Choicebox.getItems().add(name);
+            }
+            window.setScene(welcomeScene);
+        });
+
+        window.setScene(welcomeScene);
+        window.show();
+    }
+
+
+    private LinkedList<String> loadArmyChoices() throws FileNotFoundException{
+
+        File inFile = new File(LISTPATH);
+        if(!inFile.exists())
+        {
+            throw new FileNotFoundException();
+        }
+        Scanner fileReader = new Scanner(inFile);
+        LinkedList<String> armiesList = new LinkedList<>();
+        while(fileReader.hasNextLine()){
+            armiesList.add(fileReader.nextLine());
+        }
+        return armiesList;
     }
 
     public void setChart(Army army1, Army army2, BarChart chart){
@@ -232,3 +420,11 @@ public class BattleGui extends Application{
     }
 
 }
+
+
+// TODO
+// Add proper death rules
+// Add remove
+// Add screen to add units
+// Add way to save armies
+// Add way to load armies

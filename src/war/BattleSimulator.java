@@ -15,8 +15,8 @@ public class BattleSimulator {
         Scanner input = new Scanner(System.in);
         boolean cont = true;
         try {
-            kingsford.addArmmiesFromFile("resources/kingsford");
-            dust.addArmmiesFromFile("resources/dust");
+            //kingsford.addArmmiesFromFile("resources/kingsford");
+            //dust.addArmmiesFromFile("resources/dust");
         }
         catch(Exception e)
         {
