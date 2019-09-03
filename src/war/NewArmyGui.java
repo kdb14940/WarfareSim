@@ -50,7 +50,10 @@ public class NewArmyGui{
 
         // Button for adding a new unit
         newUnitButton.setOnAction(e->{
-            listOfUnits.add(NewUnitGui.display());
+            Unit[] units = NewUnitGui.display();
+            for(Unit unit : units){
+                listOfUnits.add(unit);
+            }
             unitsView.getChildren().clear();
             updateVBoxList(unitsView);
             window.setScene(scene);

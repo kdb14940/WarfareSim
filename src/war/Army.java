@@ -13,7 +13,7 @@ import static war.Type.*;
 public class Army {
 
 
-    private final String LISTPATH = "C://warfare/listOfArmies";
+    private final String LISTPATH = System.getProperty("user.dir")+"/resources/listOfArmies";
     String name;
     String armyFilePath;
     LinkedList<Unit> units;
@@ -40,15 +40,18 @@ public class Army {
         return armyFilePath;
     }
 
+    public LinkedList<Unit> getUnits() {
+        return units;
+    }
+
     public void setName(String name) {
         this.name = name;
         setFilePath();
     }
 
     private void setFilePath(){
-        StringBuilder path = new StringBuilder("C://warfare/");
-        path.append(name);
-        armyFilePath = path.toString();
+        armyFilePath = (System.getProperty("user.dir") + "/resources/");
+        armyFilePath += name;
     }
 
     public void saveArmyToFile() throws IOException{
@@ -250,8 +253,8 @@ public class Army {
         return totalCasualties;
     }
 
-    public LinkedList<String> inflictCasualties(int casualtiesInflicted){
-        LinkedList<String> deathList = new LinkedList<>();
+    public LinkedList<Unit> inflictCasualties(int casualtiesInflicted){
+        LinkedList<Unit> deathList = new LinkedList<>();
         while(casualtiesInflicted > 0 ){
             for(int i = 0 ; i < 6; i++){
                 for(int j = 0; j < units.size();j++) {
@@ -262,42 +265,42 @@ public class Army {
                         if(i == 0 && units.get(j).getUnitType() == LEVIES)
                         {
                             casualtiesInflicted -= units.get(j).getSize();
-                            deathList.add(units.get(j).getName());
+                            deathList.add(units.get(j));
                             removeUnit(j);
                             j--;
                         }
                         else if(i == 1 && units.get(j).getUnitType() == INFANTRY)
                         {
                             casualtiesInflicted -= units.get(j).getSize();
-                            deathList.add(units.get(j).getName());
+                            deathList.add(units.get(j));
                             removeUnit(j);
                             j--;
                         }
                         else if(i == 2 && units.get(j).getUnitType() == ARCHERS)
                         {
                             casualtiesInflicted -= units.get(j).getSize();
-                            deathList.add(units.get(j).getName());
+                            deathList.add(units.get(j));
                             removeUnit(j);
                             j--;
                         }
                         else if(i == 3 && units.get(j).getUnitType() == CAVALRY)
                         {
                             casualtiesInflicted -= units.get(j).getSize();
-                            deathList.add(units.get(j).getName());
+                            deathList.add(units.get(j));
                             removeUnit(j);
                             j--;
                         }
                         else if(i ==4 && units.get(j).getUnitType() == FLYING)
                         {
                             casualtiesInflicted -= units.get(j).getSize();
-                            deathList.add(units.get(j).getName());
+                            deathList.add(units.get(j));
                             removeUnit(j);
                             j--;
                         }
                         else if(i == 5 && units.get(j).getUnitType() == SIEGE_ENGINE)
                         {
                             casualtiesInflicted -= units.get(j).getSize();
-                            deathList.add(units.get(j).getName());
+                            deathList.add(units.get(j));
                             removeUnit(j);
                             j--;
                         }
@@ -332,6 +335,14 @@ public class Army {
         }
         return units.get(index).getName();
     }
+
+    public Unit getUnitAtIndex(int index){
+        if(index < 0 || index >= units.size()){
+            throw new IndexOutOfBoundsException();
+        }
+        return units.get(index);
+    }
+
 
     public void updateBasePower(){
         basePower = 0;

@@ -23,14 +23,14 @@ import java.util.Scanner;
 
 public class BattleGui extends Application{
 
-    private final String LISTPATH = "C://warfare/listOfArmies";
+    private final String LISTPATH = System.getProperty("user.dir")+"/resources/listOfArmies";
     private Stage window;
     private Scene welcomeScene, battleScene, advantageScene;
     private Army army1;
     private Army army2;
     private int stratAdvantage1 = 0;
     private int stratAdvantage2 = 0;
-    private ListView<String> deathList;
+    private ListView<Unit> deathList;
     LinkedList<String> loadedChoices;
 
     public static void main(String[] args){
@@ -87,14 +87,13 @@ public class BattleGui extends Application{
             if(!army1Choicebox.getValue().isBlank() && !army2Choicebox.getValue().isBlank())
             {
                 // create filepath from user choice
-                StringBuilder filePath1 = new StringBuilder("C://warfare/");
-                StringBuilder filePath2 = new StringBuilder("C://warfare/");
-                filePath1.append(army1Choicebox.getValue());
-                filePath2.append(army2Choicebox.getValue());
+                String filePath1 = System.getProperty("user.dir")+"/resources/" + army1Choicebox.getValue();
+                String filePath2 = System.getProperty("user.dir")+"/resources/" + army2Choicebox.getValue();
+
                 // add armies from the designated file paths
                 try{
-                    army1.addArmiesFromFile(filePath1.toString());
-                    army2.addArmiesFromFile(filePath2.toString());
+                    army1.addArmiesFromFile(filePath1);
+                    army2.addArmiesFromFile(filePath2);
                 }
                 catch(FileNotFoundException e2){
                     System.out.println("Army file not found!");
@@ -138,13 +137,18 @@ public class BattleGui extends Application{
         //buttons
         Button nextButton = new Button("Next Round");
         Button advantageButton = new Button("Advantages");
+        Button editButton1 = new Button("Edit " + army1.getName());
+        Button editButton2 = new Button("Edit " + army2.getName());
 
 
         VBox layout1 = new VBox();
         VBox layout2 = new VBox();
+        VBox layout3 = new VBox();
         VBox buttons = new VBox();
         deathList = new ListView<>();
-        buttons.getChildren().addAll(nextButton, advantageButton);
+        buttons.getChildren().addAll(nextButton, advantageButton, editButton1, editButton2);
+        Label deathLabel = new Label("Deaths");
+        layout3.getChildren().addAll(deathLabel, deathList);
 
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -155,37 +159,25 @@ public class BattleGui extends Application{
         displayArmy(army1,layout1);
         displayArmy(army2,layout2);
 
-        //stuff for button 2
-        /**
-        Button backButton = new Button("Back");
-        HBox army1Advantage = new HBox();
-        HBox army2Advantage = new HBox();
-        Label name1 = new Label(army1.getName());
-        Label name2 = new Label(army2.getName());
-
-        TextField text1 = new TextField(Integer.toString(stratAdvantage1));
-        TextField text2 = new TextField(Integer.toString(stratAdvantage2));
-        text1.setOnAction(e -> stratAdvantage1 = Integer.parseInt(text1.getText()));
-        text2.setOnAction(e -> stratAdvantage2 = Integer.parseInt(text2.getText()));
-
-        army1Advantage.getChildren().addAll(name1, text1);
-        army2Advantage.getChildren().addAll(name2, text2);
-
-        VBox advantages = new VBox(10);
-        advantages.getChildren().addAll(army1Advantage,army2Advantage, backButton);
-        Scene advantageScene = new Scene(advantages, 800,800);
-         */
         advantageButton.setOnAction(
                 e -> {
                     applyStrategicAdvantage();
                 });
+        editButton1.setOnAction(e->{
+            EditArmyGui.display(army1);
+            displayArmy(army1,layout1);
+        });
+
+        editButton2.setOnAction(e->{
+            EditArmyGui.display(army2);
+            displayArmy(army2,layout2);
+        });
 
         nextButton.setOnAction(e -> {
-            layout1.getChildren().clear();
-            layout2.getChildren().clear();
+            //layout1.getChildren().clear();
+           // layout2.getChildren().clear();
             deathList.getItems().clear();
             chart.getData().clear();
-            deathList.getItems().add("Deaths");
             battle(army1,army2);
             stratAdvantage1 = 0;
             stratAdvantage2 = 0;
@@ -195,7 +187,7 @@ public class BattleGui extends Application{
         } );
 
         HBox hBox = new HBox(15);
-        hBox.getChildren().addAll(layout1,layout2,deathList, buttons,chart);
+        hBox.getChildren().addAll(layout1,layout2,layout3, buttons,chart);
         battleScene = new Scene(new StackPane(hBox),800, 800);
 /**
         backButton.setOnAction(e -> {
@@ -266,13 +258,14 @@ public class BattleGui extends Application{
     }
 
     public void displayArmy(Army army, VBox box){
-        box.getChildren().removeAll();
+        box.getChildren().clear();
         Label armyName = new Label(army.getName());
         box.getChildren().add(armyName);
+        ListView<Unit> armyView = new ListView<>();
         for(int i = 0; i < army.size(); i++){
-            Label temp = new Label(army.getNameAtIndex(i));
-            box.getChildren().add(temp);
+            armyView.getItems().add(army.getUnitAtIndex(i));
         }
+        box.getChildren().add(armyView);
     }
 
     public void battle(Army army1, Army army2){
@@ -320,8 +313,8 @@ public class BattleGui extends Application{
     private void applyCasualties(Army winner, int totalDifference, Army loser) {
         int winnerCasualtiesInflicted;
         int loserCasualtiesInflicted;
-        LinkedList<String> deathListWinner;
-        LinkedList<String> deathListLoser;
+        LinkedList<Unit> deathListWinner;
+        LinkedList<Unit> deathListLoser;
 
         if(totalDifference <= 10){
             winnerCasualtiesInflicted = winner.getPyrrhicCasualties(true);
@@ -343,10 +336,10 @@ public class BattleGui extends Application{
         deathListWinner = winner.inflictCasualties(winnerCasualtiesInflicted);
         deathListLoser = loser.inflictCasualties((loserCasualtiesInflicted));
         deathList.getItems().clear();
-        for(String death : deathListLoser){
+        for(Unit death : deathListLoser){
             deathList.getItems().add(death);
         }
-        for(String death : deathListWinner){
+        for(Unit death : deathListWinner){
             deathList.getItems().add(death);
         }
     }

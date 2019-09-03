@@ -5,7 +5,7 @@ import java.util.Random;
 public class Unit {
 
     private String name;
-    private double cost;
+    private int cost;
     private Type unitType;
     private Equipment unitEquipment;
     private Experience unitExperience;
@@ -66,26 +66,28 @@ public class Unit {
     public void calculateCost(){
         //additions
         cost = 0;
-        cost = attackBonus + powerBonus + defenseBonus + toughnessBonus + (2 * moraleBonus);
+        double doubleCost = 0;
+        doubleCost = attackBonus + powerBonus + defenseBonus + toughnessBonus + (2 * moraleBonus);
 
         //multipliers
         switch(size){
-            case 4 : cost *= .66;
+            case 4 : doubleCost *= .66;
                 break;
-            case 6 : cost *= 1;
+            case 6 : doubleCost *= 1;
                 break;
-            case 8 : cost *= 1.33;
+            case 8 : doubleCost *= 1.33;
                 break;
-            case 10 : cost *= 1.66;
+            case 10 : doubleCost *= 1.66;
                 break;
-            case 12 : cost *= 2;
+            case 12 : doubleCost *= 2;
                 break;
             default:  System.out.println("Error multiplying size for " + name);
                 break;
         }
-        cost *= unitType.getCostModifier();
-        cost *= 10;
-        cost += 30;
+        doubleCost *= unitType.getCostModifier();
+        doubleCost *= 10;
+        doubleCost += 30;
+        cost = (int) doubleCost;
     }
 
     public int rollSizeDie(){
@@ -96,7 +98,7 @@ public class Unit {
     public String getName() {
         return name;
     }
-    public double getCost() {
+    public int getCost() {
         return cost;
     }
 
@@ -148,7 +150,7 @@ public class Unit {
         this.attackBonus = attackBonus;
     }
 
-    public void setCost(double cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 

@@ -28,10 +28,10 @@ import java.util.Scanner;
 import static javafx.application.Application.launch;
 
 public class NewUnitGui{
-    static Unit unit;
+    static Unit[] units;
 
 
-    public static Unit display(){
+    public static Unit[] display(){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("New Unit Creation");
@@ -81,7 +81,13 @@ public class NewUnitGui{
             additionalModifiers[2] = Integer.parseInt(defenseField.getText());
             additionalModifiers[3] = Integer.parseInt(toughnessField.getText());
             additionalModifiers[4] = Integer.parseInt(moraleField.getText());
-            unit = new Unit(name.toString(), tempType, tempEquipment, tempExperience, size, additionalModifiers);
+
+            //add correct number of units from user inputted number of copies
+            int numUnits = InputBox.display();
+            units = new Unit[numUnits];
+            for(int i = 0; i < numUnits; i++){
+                units[i] = new Unit(name.toString(), tempType, tempEquipment, tempExperience, size, additionalModifiers);
+            }
             window.close();
         });
 
@@ -108,7 +114,7 @@ public class NewUnitGui{
 
         window.setScene(scene);
         window.showAndWait();
-        return unit;
+        return units;
     }
 
     public static ChoiceBox<Type> createTypeChoiceBox(){
