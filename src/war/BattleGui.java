@@ -44,10 +44,12 @@ public class BattleGui extends Application{
         army2 = new Army();
         welcomeScreen();
 
-
     }
 
 
+    /**
+     * Welcome Screen - used to pick armies or create a new one
+     */
     private void welcomeScreen(){
 
         loadedChoices = new LinkedList<>();
@@ -103,7 +105,9 @@ public class BattleGui extends Application{
             }
         });
 
+        // button for creating a new army
         newArmy.setOnAction(e->{
+            // get new army from NewArmyGUI
             Army tempArmy = NewArmyGui.display();
             try {
                 tempArmy.saveArmyToFile();
@@ -111,6 +115,7 @@ public class BattleGui extends Application{
             catch(IOException err){
                 System.out.println("Error writing army to file");
             }
+            // Reset army choice box options before going back to previos Scene
             try {
                 loadedChoices = loadArmyChoices();
             }
@@ -133,6 +138,9 @@ public class BattleGui extends Application{
         window.show();
     }
 
+    /**
+     * Screen for the battle simulation
+     */
     private void battle(){
         //buttons
         Button nextButton = new Button("Next Round");
@@ -140,7 +148,7 @@ public class BattleGui extends Application{
         Button editButton1 = new Button("Edit " + army1.getName());
         Button editButton2 = new Button("Edit " + army2.getName());
 
-
+        // layouts
         VBox layout1 = new VBox();
         VBox layout2 = new VBox();
         VBox layout3 = new VBox();
@@ -150,32 +158,35 @@ public class BattleGui extends Application{
         Label deathLabel = new Label("Deaths");
         layout3.getChildren().addAll(deathLabel, deathList);
 
+        //create bar chart
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
         BarChart<String, Number> chart = new BarChart(xAxis,yAxis);
-
         setChart(army1,army2,chart);
 
         displayArmy(army1,layout1);
         displayArmy(army2,layout2);
 
+        // button for advatnages. Opens Advantage Scene
         advantageButton.setOnAction(
                 e -> {
                     applyStrategicAdvantage();
                 });
+
+        // button for editing army 1
         editButton1.setOnAction(e->{
             EditArmyGui.display(army1);
             displayArmy(army1,layout1);
         });
 
+        // button for editing army 2
         editButton2.setOnAction(e->{
             EditArmyGui.display(army2);
             displayArmy(army2,layout2);
         });
 
+        // button for going to next round
         nextButton.setOnAction(e -> {
-            //layout1.getChildren().clear();
-           // layout2.getChildren().clear();
             deathList.getItems().clear();
             chart.getData().clear();
             battle(army1,army2);
@@ -186,22 +197,17 @@ public class BattleGui extends Application{
             setChart(army1,army2,chart);
         } );
 
+        //layouts
         HBox hBox = new HBox(15);
         hBox.getChildren().addAll(layout1,layout2,layout3, buttons,chart);
         battleScene = new Scene(new StackPane(hBox),800, 800);
-/**
-        backButton.setOnAction(e -> {
-            stratAdvantage1 = Integer.parseInt(text1.getText());
-            stratAdvantage2 = Integer.parseInt(text2.getText());
-            window.setScene(battleScene);
-        });
-
- */
-
         window.setScene(battleScene);
         window.show();
     }
 
+    /**
+     * Scene for manually applying a strategic advantage to the battle
+     */
     private void applyStrategicAdvantage(){
         Button backButton = new Button("Back");
         HBox army1Advantage = new HBox();
@@ -212,23 +218,33 @@ public class BattleGui extends Application{
 
         TextField text1 = new TextField(Integer.toString(stratAdvantage1));
         TextField text2 = new TextField(Integer.toString(stratAdvantage2));
+        //save text if enter is pressed
         text1.setOnAction(e -> stratAdvantage1 = Integer.parseInt(text1.getText()));
         text2.setOnAction(e -> stratAdvantage2 = Integer.parseInt(text2.getText()));
 
+        //set layouts
         army1Advantage.getChildren().addAll(name1, text1);
         army2Advantage.getChildren().addAll(name2, text2);
-
         advantages.getChildren().addAll(army1Advantage,army2Advantage, backButton);
-        Scene advantageScene = new Scene(advantages, 800,800);
+        Scene advantageScene = new Scene(advantages, 800,600);
 
+        // button to go back
+        // saves the text in each box to respected stratAdvantages
         backButton.setOnAction(e -> {
             stratAdvantage1 = Integer.parseInt(text1.getText());
             stratAdvantage2 = Integer.parseInt(text2.getText());
             window.setScene(battleScene);
         });
+        //set scene
         window.setScene(advantageScene);
     }
 
+
+    /**
+     * Loads the choices of different armies from the LISTPATH directory
+     * @return - returns a Linked List of different names of armies
+     * @throws FileNotFoundException
+     */
     private LinkedList<String> loadArmyChoices() throws FileNotFoundException{
 
         File inFile = new File(LISTPATH);
@@ -236,6 +252,7 @@ public class BattleGui extends Application{
         {
             throw new FileNotFoundException();
         }
+
         Scanner fileReader = new Scanner(inFile);
         LinkedList<String> armiesList = new LinkedList<>();
         while(fileReader.hasNextLine()){
@@ -244,8 +261,15 @@ public class BattleGui extends Application{
         return armiesList;
     }
 
+    /**
+     * Sets the Chart with data from army 1 and army 2
+     * @param army1 - army 1
+     * @param army2 = army 2
+     * @param chart = chart
+     */
     public void setChart(Army army1, Army army2, BarChart chart){
         chart.setTitle("Power Levels");
+        chart.setMaxWidth(250);
         chart.getXAxis().setLabel("Army");
         chart.getYAxis().setLabel("Power");
         XYChart.Series series1 = new XYChart.Series();
@@ -257,6 +281,11 @@ public class BattleGui extends Application{
         chart.getData().addAll(series1,series2);
     }
 
+    /**
+     * Updates box with the name of the army and a listView of all the units
+     * @param army - army to be displayed
+     * @param box - VBox where the data is held
+     */
     public void displayArmy(Army army, VBox box){
         box.getChildren().clear();
         Label armyName = new Label(army.getName());
@@ -268,6 +297,13 @@ public class BattleGui extends Application{
         box.getChildren().add(armyView);
     }
 
+    /**
+     * Method for doing the math to each battle
+     * TODO NOTE - should be renamed, maybe even moved into its own static class????
+     * TODO along with all other associated methods
+     * @param army1
+     * @param army2
+     */
     public void battle(Army army1, Army army2){
         Random rand = new Random();
         int army1Advantage = 0;
@@ -285,6 +321,13 @@ public class BattleGui extends Application{
     }
 
 
+    /**
+     * Calculates the force Advantage that primary gains from battling secondary
+     * Force Advantage is the percentage difference of costs of each army
+     * @param primary - primary army that gets the advatnage applied
+     * @param secondary - secondary army that does not get altered
+     * @return - the amount of advantage gained
+     */
     public int applyForceAdvantage(Army primary, Army secondary){
         if(primary.getBasePower() <= secondary.getBasePower()){
             return 0;
@@ -296,7 +339,15 @@ public class BattleGui extends Application{
         }
     }
 
-    public void calculateCasualties(int total1, int total2, Army army1, Army army2){
+    /**
+     * Helper function to find out which army won the round then calles applyCasualties with the proper winner
+     * and the totalDifferennce for the round
+     * @param total1 - total amount rolled for the round for army 1
+     * @param total2 - total amount rolled for the round for army 2
+     * @param army1 - army 1
+     * @param army2 - army 2
+     */
+    private void calculateCasualties(int total1, int total2, Army army1, Army army2){
         if(total1 > total2){
             int totalDifference = total1 - total2;
             applyCasualties(army1, totalDifference, army2);
@@ -309,13 +360,20 @@ public class BattleGui extends Application{
 
     }
 
-
+    /**
+     * Uses MCDM's forumla to apply casualties to each army
+     * Depending on the win difference the casualty amount differs
+     * @param winner - army that won
+     * @param totalDifference - difference in rolls for the rounds
+     * @param loser - army that lost
+     */
     private void applyCasualties(Army winner, int totalDifference, Army loser) {
         int winnerCasualtiesInflicted;
         int loserCasualtiesInflicted;
         LinkedList<Unit> deathListWinner;
         LinkedList<Unit> deathListLoser;
 
+        // check which type of victory
         if(totalDifference <= 10){
             winnerCasualtiesInflicted = winner.getPyrrhicCasualties(true);
             loserCasualtiesInflicted = loser.getPyrrhicCasualties(false);
@@ -335,7 +393,10 @@ public class BattleGui extends Application{
 
         deathListWinner = winner.inflictCasualties(winnerCasualtiesInflicted);
         deathListLoser = loser.inflictCasualties((loserCasualtiesInflicted));
+        //NOTE : get rid of this next line to not wipe the deathList every round
         deathList.getItems().clear();
+
+        //update deathList with all the fallen soldiers for this round
         for(Unit death : deathListLoser){
             deathList.getItems().add(death);
         }

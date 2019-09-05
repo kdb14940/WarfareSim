@@ -50,14 +50,19 @@ public class Army {
     }
 
     private void setFilePath(){
-        armyFilePath = (System.getProperty("user.dir") + "/resources/");
-        armyFilePath += name;
+        armyFilePath = (System.getProperty("user.dir") + "/resources/" + name);
     }
 
+
+    //TODO clean this up, make the file readable by humans
+    // FIX BUG WITH ADDING MODIFIERS TWICE AFTER INITIAL SAVE
+    // DUE TO SAVING THE INFO IN THE ARRAY AND ALSO GETTING THEM ADDED FROM TYPE, ETC
     public void saveArmyToFile() throws IOException{
         File file = new File(armyFilePath);
-        if(!file.createNewFile()){
-            System.out.println("Error creating new file for " + name);
+        if(file.createNewFile()){
+            FileWriter listWriter = new FileWriter(LISTPATH,true);
+            listWriter.write(name + "\n");
+            listWriter.close();
         }
         FileWriter writer = new FileWriter(file);
 
@@ -68,15 +73,12 @@ public class Army {
             writer.write(unit.getUnitEquipment().getNum() + "\n");
             writer.write(unit.getUnitExperience().getNum() + "\n");
             writer.write(unit.getSize() + "\n");
-            writer.write(unit.getAttackBonus() + "\n");
-            writer.write(unit.getPowerBonus() + "\n");
-            writer.write(unit.getDefenseBonus() + "\n");
-            writer.write(unit.getToughnessBonus() + "\n");
-            writer.write(unit.getMoraleBonus() + "\n");
+            writer.write(unit.getAdditionalBonuses()[0] + "\n");
+            writer.write(unit.getAdditionalBonuses()[1] + "\n");
+            writer.write(unit.getAdditionalBonuses()[2] + "\n");
+            writer.write(unit.getAdditionalBonuses()[3] + "\n");
+            writer.write(unit.getAdditionalBonuses()[4] + "\n");
         }
-        writer.close();
-        writer = new FileWriter(LISTPATH, true);
-        writer.write(name + "\n");
         writer.close();
     }
 
@@ -87,7 +89,7 @@ public class Army {
             throw new FileNotFoundException();
         }
         Scanner fileReader = new Scanner(inFile);
-        name = fileReader.nextLine();
+        setName(fileReader.nextLine());
         while(fileReader.hasNextLine())
         {
             String tempName;
@@ -97,6 +99,7 @@ public class Army {
             Experience tempExperience;
             int tempSize;
             int [] tempModifierArray = new int[5];
+            //TODO integer input validation
             tempName = fileReader.nextLine();
             typeNum = Integer.parseInt(fileReader.nextLine());
             equipNum = Integer.parseInt(fileReader.nextLine());

@@ -9,6 +9,7 @@ public class Unit {
     private Type unitType;
     private Equipment unitEquipment;
     private Experience unitExperience;
+    private int[] additionalBonuses;
 
     private int attackBonus;
     private int powerBonus;
@@ -34,6 +35,7 @@ public class Unit {
         this.unitEquipment = unitEquipment;
         this.unitExperience = unitExperience;
         this.size = size;
+        this.additionalBonuses = additionalBonuses;
         calculateAdditionalBonuses(this.unitType.getModifierArray());
         calculateAdditionalBonuses(this.unitEquipment.getModifierArray());
         calculateAdditionalBonuses(this.unitExperience.getModifierArray());
@@ -138,6 +140,10 @@ public class Unit {
         return unitType;
     }
 
+    public int[] getAdditionalBonuses() {
+        return additionalBonuses;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -184,6 +190,10 @@ public class Unit {
 
     public void setUnitType(Type unitType) {
         this.unitType = unitType;
+    }
+
+    public void setAdditionalBonuses(int[] additionalBonuses) {
+        this.additionalBonuses = additionalBonuses;
     }
 
     public String toString(){

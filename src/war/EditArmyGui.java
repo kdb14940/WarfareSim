@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
@@ -26,6 +27,10 @@ public class EditArmyGui{
     static VBox vBox;
     static TableView<Unit> unitTableView;
 
+    /**
+     * Displays the Window for Editing an Army
+     * @param army - army to be edited
+     */
     public static void display(Army army){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -36,21 +41,32 @@ public class EditArmyGui{
 
         createTable(army);
 
-
-
-        updateUnitTableView(army);
         //variables
-        Button saveButton = new Button("Save");
+        Button saveButton = new Button("Save To File");
+        Button backButton = new Button("Back");
         Button addButton = new Button("Add Unit");
         Button removeButton = new Button("Remove Unit");
-        buttonBox.getChildren().addAll(addButton,removeButton,saveButton);
+        buttonBox.getChildren().addAll(addButton,removeButton,backButton, saveButton);
         //button to save army to file and exit screen
+        //TODO better exception handling
+        // create an alert box??
         saveButton.setOnAction(e->
         {
-
+            try{
+                army.saveArmyToFile();
+            }
+            catch(IOException err){
+                System.out.println("Error with saving army to file");
+            }
             window.close();
         });
 
+        //button to save without exiting
+        backButton.setOnAction(e->{
+            window.close();
+        });
+
+        // button to add a unit
         addButton.setOnAction(e ->{
             Unit[] units = NewUnitGui.display();
             for(Unit unit : units){
@@ -59,20 +75,26 @@ public class EditArmyGui{
             updateUnitTableView(army);
         });
 
+        // button to remove a unit
         removeButton.setOnAction(e->{
             Unit selectedUnit = unitTableView.getSelectionModel().getSelectedItem();
             army.removeUnit(selectedUnit);
             updateUnitTableView(army);
         });
 
+        //layout and set Scene
         HBox layout = new HBox(20);
         layout.getChildren().addAll(vBox, buttonBox);
         Scene scene = new Scene(layout, 800,600);
         window.setScene(scene);
         window.showAndWait();
-        //return army;
     }
 
+    /**
+     * Clears the table of all values then refills it with any changes
+     * NOTE: May be innefficient to delete everything then refill all
+     * @param army - army used to fill table
+     */
     private static void updateUnitTableView(Army army){
         vBox.getChildren().clear();
         unitTableView.getItems().clear();
@@ -84,8 +106,13 @@ public class EditArmyGui{
         vBox.getChildren().addAll(unitsLabel, unitTableView);
     }
 
+    /**
+     * Creates the table with all the attributes for a Unit
+     * @param army - used to be passed into updateUnitTableView
+     */
     public static void createTable(Army army){
         unitTableView = new TableView<>();
+        //columns
         TableColumn<Unit, String> nameColumn = new TableColumn<>("Name");
         TableColumn<Unit, Integer> attackColumn = new TableColumn<>("Attack");
         TableColumn<Unit, Integer> powerColumn = new TableColumn<>("Power");
