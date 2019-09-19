@@ -8,7 +8,8 @@ public enum Type {
     CAVALRY(3, "Cavalry",  new int[] {1,1,0,0,2}, 1.5),
     LEVIES(4, "Levies",  new int[] {0,0,0,0,-1}, 0.75),
     INFANTRY(5, "Infantry",  new int[] {0,0,1,1,0} , 1),
-    SIEGE_ENGINE(6, "Siege Engine",  new int[] {1,1,0,1,0}, 1.5);
+    SIEGE_ENGINE(6, "Siege Engine",  new int[] {1,1,0,1,0}, 1.5),
+    SPECIAL(7, "Special", new int[] {3, 3, 3, 3, 5}, 2.5);
 
 
 

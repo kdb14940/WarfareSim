@@ -119,6 +119,7 @@ public class EditArmyGui{
         TableColumn<Unit, Integer> defenseColumn = new TableColumn<>("Defense");
         TableColumn<Unit, Integer> toughnessColumn = new TableColumn<>("Toughness");
         TableColumn<Unit, Integer> moraleColumn = new TableColumn<>("Morale");
+        TableColumn<Unit, Integer> sizeColumn = new TableColumn<>("Size");
         TableColumn<Unit, Integer> costColumn = new TableColumn<>("Cost");
 
         nameColumn.setMinWidth(250);
@@ -127,6 +128,7 @@ public class EditArmyGui{
         defenseColumn.setMinWidth(20);
         toughnessColumn.setMinWidth(20);
         moraleColumn.setMinWidth(20);
+        sizeColumn.setMinWidth(20);
         costColumn.setMinWidth(20);
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -135,6 +137,7 @@ public class EditArmyGui{
         defenseColumn.setCellValueFactory(new PropertyValueFactory<>("defenseBonus"));
         toughnessColumn.setCellValueFactory(new PropertyValueFactory<>("toughnessBonus"));
         moraleColumn.setCellValueFactory(new PropertyValueFactory<>("moraleBonus"));
+        sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
         costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
 
         updateUnitTableView(army);

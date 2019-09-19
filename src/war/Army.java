@@ -55,8 +55,7 @@ public class Army {
 
 
     //TODO clean this up, make the file readable by humans
-    // FIX BUG WITH ADDING MODIFIERS TWICE AFTER INITIAL SAVE
-    // DUE TO SAVING THE INFO IN THE ARRAY AND ALSO GETTING THEM ADDED FROM TYPE, ETC
+
     public void saveArmyToFile() throws IOException{
         File file = new File(armyFilePath);
         if(file.createNewFile()){
@@ -123,6 +122,8 @@ public class Army {
                 case 5 :    tempType = INFANTRY;
                     break;
                 case 6 :    tempType = SIEGE_ENGINE;
+                    break;
+                case 7 :    tempType = SPECIAL;
                     break;
                 default:    tempType = LEVIES;
                     break;
@@ -203,7 +204,7 @@ public class Army {
                 totalCasualties += unit.rollSizeDie();
             } else if (unit.getUnitType() == FLYING) {
                 totalCasualties += unit.rollSizeDie();
-            } else if (unit.getUnitType() == SIEGE_ENGINE && winner) {
+            } else if ((unit.getUnitType() == SIEGE_ENGINE || unit.getUnitType() == SPECIAL) && winner) {
                 totalCasualties += unit.rollSizeDie();
             }
         }
@@ -226,7 +227,7 @@ public class Army {
                 totalCasualties += unit.rollSizeDie();
             } else if (unit.getUnitType() == FLYING && winner) {
                 totalCasualties += unit.rollSizeDie();
-            } else if (unit.getUnitType() == SIEGE_ENGINE && winner) {
+            } else if ((unit.getUnitType() == SIEGE_ENGINE || unit.getUnitType() == SPECIAL) && winner) {
                 totalCasualties += unit.rollSizeDie();
             }
         }
@@ -249,7 +250,7 @@ public class Army {
                 totalCasualties += unit.rollSizeDie();
             } else if (unit.getUnitType() == FLYING ) {
                 totalCasualties += unit.rollSizeDie();
-            } else if (unit.getUnitType() == SIEGE_ENGINE && winner) {
+            } else if ((unit.getUnitType() == SIEGE_ENGINE || unit.getUnitType() == SPECIAL) && winner) {
                 totalCasualties += unit.rollSizeDie();
             }
         }
@@ -259,7 +260,7 @@ public class Army {
     public LinkedList<Unit> inflictCasualties(int casualtiesInflicted){
         LinkedList<Unit> deathList = new LinkedList<>();
         while(casualtiesInflicted > 0 ){
-            for(int i = 0 ; i < 6; i++){
+            for(int i = 0 ; i < 7; i++){
                 for(int j = 0; j < units.size();j++) {
 
                     if (casualtiesInflicted <= 0) {
@@ -302,6 +303,12 @@ public class Army {
                         }
                         else if(i == 5 && units.get(j).getUnitType() == SIEGE_ENGINE)
                         {
+                            casualtiesInflicted -= units.get(j).getSize();
+                            deathList.add(units.get(j));
+                            removeUnit(j);
+                            j--;
+                        }
+                        else if (i == 6 && units.get(j).getUnitType() == SPECIAL){
                             casualtiesInflicted -= units.get(j).getSize();
                             deathList.add(units.get(j));
                             removeUnit(j);

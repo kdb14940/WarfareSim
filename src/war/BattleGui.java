@@ -300,7 +300,7 @@ public class BattleGui extends Application{
     /**
      * Method for doing the math to each battle
      * TODO NOTE - should be renamed, maybe even moved into its own static class????
-     * TODO along with all other associated methods
+     * TODO along with all other associated battle methods
      * @param army1
      * @param army2
      */
@@ -452,8 +452,9 @@ public class BattleGui extends Application{
 }
 
 
-// TODO
-// Add proper death rules
-// Add remove
-// Add way to save armies
-// Add way to load armies
+// TODO change LinkedList in Army into seperate list to separate each army type
+// TODO input validation. Create an alert box to alert user when their input is bad and handle it
+// TODO display message on battle window after each round to display who won and what type of victory
+// TODO fix window sizes and where they display
+// TODO make everything look nicer
+

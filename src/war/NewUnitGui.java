@@ -69,8 +69,11 @@ public class NewUnitGui{
                 name.append(nameField.getText());
                 name.append(" ");
             }
-            name.append(experienceChoiceBox.getValue() + " " + equipmentChoiceBox.getValue()
+            if(typeChoiceBox.getValue() != Type.SPECIAL)
+            {
+                name.append(experienceChoiceBox.getValue() + " " + equipmentChoiceBox.getValue()
                         + " " + typeChoiceBox.getValue());
+            }
             Type tempType = typeChoiceBox.getValue();
             Equipment tempEquipment = equipmentChoiceBox.getValue();
             Experience tempExperience = experienceChoiceBox.getValue();
@@ -119,7 +122,7 @@ public class NewUnitGui{
 
     public static ChoiceBox<Type> createTypeChoiceBox(){
         ChoiceBox<Type> typeChoiceBox = new ChoiceBox<>();
-        typeChoiceBox.getItems().addAll(Type.LEVIES, Type.INFANTRY, Type.CAVALRY, Type.SIEGE_ENGINE, Type.ARCHERS, Type.FLYING);
+        typeChoiceBox.getItems().addAll(Type.LEVIES, Type.INFANTRY, Type.CAVALRY, Type.SIEGE_ENGINE, Type.ARCHERS, Type.FLYING, Type.SPECIAL);
         return typeChoiceBox;
     }
 
