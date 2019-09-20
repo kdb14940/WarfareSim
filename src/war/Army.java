@@ -18,7 +18,7 @@ public class Army {
     String armyFilePath;
     LinkedList<Unit> units;
     int basePower;                          // power based on amount of units
-    //TODO: morale
+
 
     public Army(){
         units = new LinkedList<>();
@@ -99,16 +99,16 @@ public class Army {
             int tempSize;
             int [] tempModifierArray = new int[5];
             //TODO integer input validation
-            tempName = fileReader.nextLine();
-            typeNum = Integer.parseInt(fileReader.nextLine());
-            equipNum = Integer.parseInt(fileReader.nextLine());
-            expNum = Integer.parseInt(fileReader.nextLine());
-            tempSize = Integer.parseInt(fileReader.nextLine());
-            tempModifierArray[0] = Integer.parseInt(fileReader.nextLine());
-            tempModifierArray[1] = Integer.parseInt(fileReader.nextLine());
-            tempModifierArray[2] = Integer.parseInt(fileReader.nextLine());
-            tempModifierArray[3] = Integer.parseInt(fileReader.nextLine());
-            tempModifierArray[4] = Integer.parseInt(fileReader.nextLine());
+                tempName = fileReader.nextLine();
+                typeNum = Integer.parseInt(fileReader.nextLine());
+                equipNum = Integer.parseInt(fileReader.nextLine());
+                expNum = Integer.parseInt(fileReader.nextLine());
+                tempSize = Integer.parseInt(fileReader.nextLine());
+                tempModifierArray[0] = Integer.parseInt(fileReader.nextLine());
+                tempModifierArray[1] = Integer.parseInt(fileReader.nextLine());
+                tempModifierArray[2] = Integer.parseInt(fileReader.nextLine());
+                tempModifierArray[3] = Integer.parseInt(fileReader.nextLine());
+                tempModifierArray[4] = Integer.parseInt(fileReader.nextLine());
 
             switch(typeNum){
                 case 1 :    tempType = FLYING;

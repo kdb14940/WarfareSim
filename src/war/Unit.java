@@ -137,7 +137,7 @@ public class Unit {
     }
 
     public Type getUnitType() {
-        return unitType;
+         return unitType;
     }
 
     public int[] getAdditionalBonuses() {

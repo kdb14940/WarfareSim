@@ -32,7 +32,7 @@ public class BattleGui extends Application{
     private int stratAdvantage2 = 0;            // strategic advantage for army 2
     private ListView<Unit> deathList;
     private LinkedList<String> loadedChoices;
-    private Label winnerLabel;
+    private Label winnerLabel, army1Casualties, army2Casualties;
 
     public static void main(String[] args){
         launch(args);
@@ -156,6 +156,9 @@ public class BattleGui extends Application{
         VBox buttons = new VBox();
         deathList = new ListView<>();
         winnerLabel = new Label();
+        army1Casualties = new Label();
+        army2Casualties = new Label();
+
         Label deathLabel = new Label("Deaths");
         buttons.getChildren().addAll(nextButton, advantageButton, editButton1, editButton2);
         layout3.getChildren().addAll(deathLabel, deathList);
@@ -296,7 +299,7 @@ public class BattleGui extends Application{
         for(int i = 0; i < army.size(); i++){
             armyView.getItems().add(army.getUnitAtIndex(i));
         }
-        box.getChildren().addAll(armyView, winnerLabel);
+        box.getChildren().addAll(armyView, winnerLabel, army1Casualties, army2Casualties);
     }
 
     /**
@@ -397,6 +400,8 @@ public class BattleGui extends Application{
             loserCasualtiesInflicted = loser.getRoutCasualties(false);
             winnerLabel.setText("Rout Victory for " + winner.getName());
         }
+        army1Casualties.setText(winner.getName() + " inflicted " + winnerCasualtiesInflicted + " casualties!");
+        army2Casualties.setText(loser.getName() + " inflicted " + loserCasualtiesInflicted + " casualties!");
 
         deathListWinner = winner.inflictCasualties(loserCasualtiesInflicted);
         deathListLoser = loser.inflictCasualties((winnerCasualtiesInflicted));
