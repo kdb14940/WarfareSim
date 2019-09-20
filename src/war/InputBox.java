@@ -42,9 +42,13 @@ public class InputBox{
         layout.getChildren().addAll(label, inputField, confirmButton);
 
         confirmButton.setOnAction(e->{
-            //TODO input validation for integer
-            input = Integer.parseInt(inputField.getText());
-            window.close();
+                try {
+                    input = Integer.parseInt(inputField.getText());
+                    window.close();
+                }
+                catch(NumberFormatException err) {
+                    System.out.println("Not an integer. It was a " + inputField.getText().getClass() + "Try again.");
+                }
         });
 
         Scene scene = new Scene(layout, 200,200);

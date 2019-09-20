@@ -23,15 +23,16 @@ import java.util.Scanner;
 
 public class BattleGui extends Application{
 
-    private final String LISTPATH = System.getProperty("user.dir")+"/resources/listOfArmies";
+    private final String LISTPATH = System.getProperty("user.dir")+"/resources/listOfArmies"; // gets the path of the resources folder
     private Stage window;
     private Scene welcomeScene, battleScene, advantageScene;
     private Army army1;
     private Army army2;
-    private int stratAdvantage1 = 0;
-    private int stratAdvantage2 = 0;
+    private int stratAdvantage1 = 0;            // strategic advantage for army 1
+    private int stratAdvantage2 = 0;            // strategic advantage for army 2
     private ListView<Unit> deathList;
-    LinkedList<String> loadedChoices;
+    private LinkedList<String> loadedChoices;
+    private Label winnerLabel;
 
     public static void main(String[] args){
         launch(args);
@@ -154,8 +155,9 @@ public class BattleGui extends Application{
         VBox layout3 = new VBox();
         VBox buttons = new VBox();
         deathList = new ListView<>();
-        buttons.getChildren().addAll(nextButton, advantageButton, editButton1, editButton2);
+        winnerLabel = new Label();
         Label deathLabel = new Label("Deaths");
+        buttons.getChildren().addAll(nextButton, advantageButton, editButton1, editButton2);
         layout3.getChildren().addAll(deathLabel, deathList);
 
         //create bar chart
@@ -294,7 +296,7 @@ public class BattleGui extends Application{
         for(int i = 0; i < army.size(); i++){
             armyView.getItems().add(army.getUnitAtIndex(i));
         }
-        box.getChildren().add(armyView);
+        box.getChildren().addAll(armyView, winnerLabel);
     }
 
     /**
@@ -377,22 +379,27 @@ public class BattleGui extends Application{
         if(totalDifference <= 10){
             winnerCasualtiesInflicted = winner.getPyrrhicCasualties(true);
             loserCasualtiesInflicted = loser.getPyrrhicCasualties(false);
+            winnerLabel.setText("Pyrrhic Victory for " + winner.getName());
         }else if(totalDifference <= 50){
             winnerCasualtiesInflicted = winner.getMinorCasualties(true);
             loserCasualtiesInflicted = loser.getMinorCasualties(false);
+            winnerLabel.setText("Minor Victory for " + winner.getName());
         }else if(totalDifference <= 100){
             winnerCasualtiesInflicted = winner.getClearCasualties(true);
             loserCasualtiesInflicted = loser.getClearCasualties(false);
+            winnerLabel.setText("Clear Victory for " + winner.getName());
         }else if(totalDifference <= 200){
             winnerCasualtiesInflicted = winner.getMajorCasualties(true);
             loserCasualtiesInflicted = loser.getMajorCasualties(false);
+            winnerLabel.setText("Major Victory for " + winner.getName());
         }else{
             winnerCasualtiesInflicted = winner.getRoutCasualties(true);
             loserCasualtiesInflicted = loser.getRoutCasualties(false);
+            winnerLabel.setText("Rout Victory for " + winner.getName());
         }
 
-        deathListWinner = winner.inflictCasualties(winnerCasualtiesInflicted);
-        deathListLoser = loser.inflictCasualties((loserCasualtiesInflicted));
+        deathListWinner = winner.inflictCasualties(loserCasualtiesInflicted);
+        deathListLoser = loser.inflictCasualties((winnerCasualtiesInflicted));
         //NOTE : get rid of this next line to not wipe the deathList every round
         deathList.getItems().clear();
 
@@ -452,9 +459,9 @@ public class BattleGui extends Application{
 }
 
 
-// TODO change LinkedList in Army into seperate list to separate each army type
+// TODO change LinkedList in Army into separate list to separate each army type
 // TODO input validation. Create an alert box to alert user when their input is bad and handle it
-// TODO display message on battle window after each round to display who won and what type of victory
+// DONE display message on battle window after each round to display who won and what type of victory
 // TODO fix window sizes and where they display
 // TODO make everything look nicer
 

@@ -62,7 +62,6 @@ public class NewUnitGui{
         TextField moraleField = new TextField("0");
 
         //button to save all inputted information to a unit
-        //TODO input validation
         saveButton.setOnAction(e->{
             StringBuilder name = new StringBuilder();
             if(!nameField.getText().equals("Enter Name Here")) {

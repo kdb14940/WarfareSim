@@ -259,11 +259,11 @@ public class Army {
 
     public LinkedList<Unit> inflictCasualties(int casualtiesInflicted){
         LinkedList<Unit> deathList = new LinkedList<>();
-        while(casualtiesInflicted > 0 ){
+        while(casualtiesInflicted > 0 && units.size() > 0 ){
             for(int i = 0 ; i < 7; i++){
                 for(int j = 0; j < units.size();j++) {
 
-                    if (casualtiesInflicted <= 0) {
+                    if (casualtiesInflicted <= 0 && j >= 0) {
                         break;
                     } else {
                         if(i == 0 && units.get(j).getUnitType() == LEVIES)
