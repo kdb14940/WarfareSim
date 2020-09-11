@@ -1,8 +1,13 @@
-package war;
+package war.model;
 
+import war.enums.Equipment;
+import war.enums.Experience;
+import war.enums.Type;
+
+import java.io.Serializable;
 import java.util.Random;
 
-public class Unit {
+public class Unit implements Serializable {
 
     private String name;
     private int cost;

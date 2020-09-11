@@ -1,6 +1,9 @@
-package war;
+package war.enums;
 
-public enum Equipment {
+import java.io.Serializable;
+import java.security.SecureRandom;
+
+public enum Equipment implements Serializable {
 
 
     LIGHT(1, "Light", new int[] {0,1,1,0,0}),

@@ -1,6 +1,8 @@
-package war;
+package war.enums;
 
-public enum Experience {
+import java.io.Serializable;
+
+public enum Experience implements Serializable {
 
 
     GREEN(1, "Green", new int[] {0,0,0,0,0}),

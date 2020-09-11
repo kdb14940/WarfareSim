@@ -1,7 +1,5 @@
 package war;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -12,10 +10,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import war.model.Army;
+import war.model.Unit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
@@ -87,7 +86,7 @@ public class BattleGui extends Application{
         continueButton.setOnAction(e -> {
 
             //TODO IF STATEMENT DOESNT WORK
-            if(!army1Choicebox.getValue().isBlank() && !army2Choicebox.getValue().isBlank())
+            if(!army1Choicebox.getValue().isEmpty() && !army2Choicebox.getValue().isEmpty())
             {
                 // create filepath from user choice
                 String filePath1 = System.getProperty("user.dir")+"/resources/" + army1Choicebox.getValue();
@@ -110,12 +109,14 @@ public class BattleGui extends Application{
         newArmy.setOnAction(e->{
             // get new army from NewArmyGUI
             Army tempArmy = NewArmyGui.display();
+            /**
             try {
                 tempArmy.saveArmyToFile();
             }
             catch(IOException err){
                 System.out.println("Error writing army to file");
             }
+             */
             // Reset army choice box options before going back to previos Scene
             try {
                 loadedChoices = loadArmyChoices();
@@ -180,13 +181,13 @@ public class BattleGui extends Application{
 
         // button for editing army 1
         editButton1.setOnAction(e->{
-            EditArmyGui.display(army1);
+            //EditArmyGui.display(army1);
             displayArmy(army1,layout1);
         });
 
         // button for editing army 2
         editButton2.setOnAction(e->{
-            EditArmyGui.display(army2);
+           // EditArmyGui.display(army2);
             displayArmy(army2,layout2);
         });
 

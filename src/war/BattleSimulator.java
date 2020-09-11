@@ -1,5 +1,7 @@
 package war;
 
+import war.model.Army;
+
 import java.util.Random;
 import java.util.Scanner;
 

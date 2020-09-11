@@ -1,30 +1,29 @@
-package war;
+package war.model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import war.enums.Equipment;
+import war.enums.Experience;
+import war.enums.Type;
+
+import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.Scanner;
 
-import static war.Type.*;
+import static war.enums.Type.*;
 
-public class Army {
+public class Army implements Serializable {
 
 
     private final String LISTPATH = System.getProperty("user.dir")+"/resources/listOfArmies";
-    String name;
-    String armyFilePath;
-    LinkedList<Unit> units;
+    private String name;
+    ArrayList<Unit> units;
     int basePower;                          // power based on amount of units
 
 
     public Army(){
-        units = new LinkedList<>();
+        units = new ArrayList<>();
         basePower = 0;
         name = "";
-        setFilePath();
         updateBasePower();
     }
 
@@ -36,50 +35,15 @@ public class Army {
         return name;
     }
 
-    public String getArmyFilePath(){
-        return armyFilePath;
-    }
 
-    public LinkedList<Unit> getUnits() {
+    public ArrayList<Unit> getUnits() {
         return units;
     }
 
     public void setName(String name) {
         this.name = name;
-        setFilePath();
     }
 
-    private void setFilePath(){
-        armyFilePath = (System.getProperty("user.dir") + "/resources/" + name);
-    }
-
-
-    //TODO clean this up, make the file readable by humans
-
-    public void saveArmyToFile() throws IOException{
-        File file = new File(armyFilePath);
-        if(file.createNewFile()){
-            FileWriter listWriter = new FileWriter(LISTPATH,true);
-            listWriter.write(name + "\n");
-            listWriter.close();
-        }
-        FileWriter writer = new FileWriter(file);
-
-        writer.write(name + "\n");
-        for(Unit unit : units){
-            writer.write(unit.getName() + "\n");
-            writer.write(unit.getUnitType().getNum() + "\n");
-            writer.write(unit.getUnitEquipment().getNum() + "\n");
-            writer.write(unit.getUnitExperience().getNum() + "\n");
-            writer.write(unit.getSize() + "\n");
-            writer.write(unit.getAdditionalBonuses()[0] + "\n");
-            writer.write(unit.getAdditionalBonuses()[1] + "\n");
-            writer.write(unit.getAdditionalBonuses()[2] + "\n");
-            writer.write(unit.getAdditionalBonuses()[3] + "\n");
-            writer.write(unit.getAdditionalBonuses()[4] + "\n");
-        }
-        writer.close();
-    }
 
     public void addArmiesFromFile(String filePath) throws FileNotFoundException{
         File inFile = new File(filePath);

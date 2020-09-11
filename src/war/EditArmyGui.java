@@ -7,17 +7,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import war.model.Army;
+
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class EditArmyGui{
+public class EditArmyGui{}
+    /**
     static VBox vBox;
     static TableView<Unit> unitTableView;
 
     /**
      * Displays the Window for Editing an Army
      * @param army - army to be edited
-     */
+
     public static void display(Army army){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -40,7 +43,7 @@ public class EditArmyGui{
         saveButton.setOnAction(e->
         {
             try{
-                army.saveArmyToFile();
+               // army.saveArmyToFile();
             }
             catch(IOException err){
                 System.out.println("Error with saving army to file");
@@ -81,7 +84,7 @@ public class EditArmyGui{
      * Clears the table of all values then refills it with any changes
      * NOTE: May be innefficient to delete everything then refill all
      * @param army - army used to fill table
-     */
+
     private static void updateUnitTableView(Army army){
         vBox.getChildren().clear();
         unitTableView.getItems().clear();
@@ -96,7 +99,7 @@ public class EditArmyGui{
     /**
      * Creates the table with all the attributes for a Unit
      * @param army - used to be passed into updateUnitTableView
-     */
+
     public static void createTable(Army army){
         unitTableView = new TableView<>();
         //columns
@@ -133,3 +136,5 @@ public class EditArmyGui{
     }
 
 }
+
+     */

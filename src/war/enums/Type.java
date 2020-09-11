@@ -1,6 +1,8 @@
-package war;
+package war.enums;
 
-public enum Type {
+import java.io.Serializable;
+
+public enum Type implements Serializable {
 
 
     FLYING(1, "Flying", new int[] {0,0,0,0,3}, 2),
