@@ -19,8 +19,9 @@ public class BattleGui {
     }
 
     private void initComponents(){
-        saveButton = new Button("Save");
+        saveButton = new Button("Save & Exit");
         nextRoundButton = new Button("Next Round");
+        exitButton = new Button("Exit without Saving");
         army1Table = new ArmyTableView();
         army2Table = new ArmyTableView();
         setTableColumns(army1Table);
@@ -37,7 +38,7 @@ public class BattleGui {
     }
 
     private void layoutComponents(){
-        buttonLayout.getChildren().addAll(nextRoundButton,saveButton);
+        buttonLayout.getChildren().addAll(nextRoundButton,saveButton, exitButton);
         hLayout.getChildren().addAll(army1Table, army2Table, battleChart, buttonLayout);
     }
 
@@ -154,8 +155,27 @@ public class BattleGui {
         this.battleChart = battleChart;
     }
 
+    /**
+     * Getter for exitButton
+     *
+     * @return exitButton
+     */
+    public Button getExitButton() {
+        return exitButton;
+    }
+
+    /**
+     * Setter for exitButton
+     *
+     * @param exitButton - exitButton
+     */
+    public void setExitButton(Button exitButton) {
+        this.exitButton = exitButton;
+    }
+
     private Scene scene;
     private Button saveButton;
+    private Button exitButton;
     private Button nextRoundButton;
     private ArmyTableView army1Table;
     private ArmyTableView army2Table;

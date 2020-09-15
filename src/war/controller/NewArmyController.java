@@ -39,14 +39,14 @@ public class NewArmyController {
             NewUnitGui newUnitGui = newUnitController.getNewUnitGui();
             Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
             primaryStage.setScene(newUnitGui.getScene());
-            primaryStage.setFullScreen(true);
+            primaryStage.setMaximized(true);
         });
         newArmyGui.getSaveButton().setOnAction(e->{
             saveArmy();
             armyList.addArmy(army);
 
-            ArmyChoiceController welcomeController = new ArmyChoiceController(armyList);
-            ArmyChoiceGui armyChoiceGui = welcomeController.getArmyChoiceGui();
+            ArmyChoiceController armyChoiceController = new ArmyChoiceController(armyList);
+            ArmyChoiceGui armyChoiceGui = armyChoiceController.getArmyChoiceGui();
             Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
             primaryStage.setScene(armyChoiceGui.getScene());
             primaryStage.setMaximized(true);

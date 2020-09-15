@@ -1,11 +1,14 @@
 package war.controller;
 
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import war.model.Unit;
+import war.view.ArmyChoiceGui;
 import war.view.BattleGui;
 import war.model.Army;
 
@@ -23,16 +26,28 @@ public class BattleController {
 
     private void initControllers(){
         battleGui.getSaveButton().setOnAction(e ->{
-
+            //TODO write the changes to file?
+            ArmyChoiceController armyChoiceController = new ArmyChoiceController();
+            ArmyChoiceGui armyChoiceGui = armyChoiceController.getArmyChoiceGui();
+            Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
+            primaryStage.setScene(armyChoiceGui.getScene());
+            primaryStage.setMaximized(true);
         });
 
         battleGui.getNextRoundButton().setOnAction(e ->{
 
         });
+
+        battleGui.getExitButton().setOnAction(e ->{
+            ArmyChoiceController armyChoiceController = new ArmyChoiceController();
+            ArmyChoiceGui armyChoiceGui = armyChoiceController.getArmyChoiceGui();
+            Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
+            primaryStage.setScene(armyChoiceGui.getScene());
+            primaryStage.setMaximized(true);
+        });
+
         battleGui.getArmy1Table().setArmy(army1);
         battleGui.getArmy2Table().setArmy(army2);
-        //displayArmyTable(army1, battleGui.getArmy1Table());
-        //displayArmyTable(army2, battleGui.getArmy2Table());
         setChart(army1, army2, battleGui.getBattleChart());
 
     }
