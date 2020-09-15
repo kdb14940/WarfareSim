@@ -7,9 +7,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class NewArmyScreen {
+public class NewArmyGui {
 
-    public NewArmyScreen(){
+    public NewArmyGui(){
         initComponents();
         layoutComponents();
     }

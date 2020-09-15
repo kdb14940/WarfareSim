@@ -11,9 +11,9 @@ import war.enums.Equipment;
 import war.enums.Experience;
 import war.enums.Type;
 
-public class NewUnitScreen {
+public class NewUnitGui {
 
-    public NewUnitScreen() {
+    public NewUnitGui() {
         initComponents();
         layoutComponents();
     }

@@ -2,16 +2,17 @@ package war.view;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import war.model.Army;
 
 
-public class WelcomeScreen {
+public class ArmyChoiceGui {
 
 
-    public WelcomeScreen() {
+    public ArmyChoiceGui() {
         initComponents();
         layoutComponents();
     }
@@ -23,8 +24,8 @@ public class WelcomeScreen {
         newArmyButton = new Button("New Army");
         continueButton = new Button("Continue");
         exitButton = new Button("Exit");
-        army1ChoiceBox = new ChoiceBox<>();
-        army2ChoiceBox = new ChoiceBox<>();
+        army1ComboBox = new ComboBox<>();
+        army2ComboBox = new ComboBox<>();
         army1Label = new Label("Army 1");
         army2Label = new Label("Army 2");
 
@@ -32,8 +33,8 @@ public class WelcomeScreen {
     }
 
     private void layoutComponents(){
-        army1Choice.getChildren().addAll(army1Label, army1ChoiceBox);
-        army2Choice.getChildren().addAll(army2Label, army2ChoiceBox);
+        army1Choice.getChildren().addAll(army1Label, army1ComboBox);
+        army2Choice.getChildren().addAll(army2Label, army2ComboBox);
         layout.getChildren().addAll(army1Choice, army2Choice, newArmyButton, continueButton, exitButton);
     }
 
@@ -146,39 +147,39 @@ public class WelcomeScreen {
     }
 
     /**
-     * Getter for army1ChoiceBox
+     * Getter for army1ComboBox
      *
-     * @return army1ChoiceBox
+     * @return army1ComboBox
      */
-    public ChoiceBox<String> getArmy1ChoiceBox() {
-        return army1ChoiceBox;
+    public ComboBox<Army> getArmy1ComboBox() {
+        return army1ComboBox;
     }
 
     /**
-     * Setter for army1ChoiceBox
+     * Setter for army1ComboBox
      *
-     * @param army1ChoiceBox - army1ChoiceBox
+     * @param army1ComboBox - army1ComboBox
      */
-    public void setArmy1ChoiceBox(ChoiceBox<String> army1ChoiceBox) {
-        this.army1ChoiceBox = army1ChoiceBox;
+    public void setArmy1ComboBox(ComboBox<Army> army1ComboBox) {
+        this.army1ComboBox = army1ComboBox;
     }
 
     /**
-     * Getter for army2ChoiceBox
+     * Getter for army2ComboBox
      *
-     * @return army2ChoiceBox
+     * @return army2ComboBox
      */
-    public ChoiceBox<String> getArmy2ChoiceBox() {
-        return army2ChoiceBox;
+    public ComboBox<Army> getArmy2ComboBox() {
+        return army2ComboBox;
     }
 
     /**
-     * Setter for army2ChoiceBox
+     * Setter for army2ComboBox
      *
-     * @param army2ChoiceBox - army2ChoiceBox
+     * @param army2ComboBox - army2ComboBox
      */
-    public void setArmy2ChoiceBox(ChoiceBox<String> army2ChoiceBox) {
-        this.army2ChoiceBox = army2ChoiceBox;
+    public void setArmy2ComboBox(ComboBox<Army> army2ComboBox) {
+        this.army2ComboBox = army2ComboBox;
     }
 
     /**
@@ -206,8 +207,8 @@ public class WelcomeScreen {
     private Button newArmyButton;
     private Button continueButton;
     private Button exitButton;
-    private ChoiceBox<String> army1ChoiceBox;
-    private ChoiceBox<String> army2ChoiceBox;
+    private ComboBox<Army> army1ComboBox;
+    private ComboBox<Army> army2ComboBox;
     private Label army1Label;
     private Label army2Label;
 }

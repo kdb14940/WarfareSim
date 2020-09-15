@@ -20,7 +20,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-public class BattleGui extends Application{
+public class BattleGui_old extends Application{
 
     private final String LISTPATH = System.getProperty("user.dir")+"/resources/listOfArmies"; // gets the path of the resources folder
     private Stage window;

@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 import war.model.Unit;
 import war.model.Army;
 import war.model.ArmyList;
-import war.view.NewArmyScreen;
-import war.view.NewUnitScreen;
-import war.view.WelcomeScreen;
+import war.view.NewArmyGui;
+import war.view.NewUnitGui;
+import war.view.ArmyChoiceGui;
 
 
 public class NewArmyController {
@@ -18,37 +18,37 @@ public class NewArmyController {
 
     public NewArmyController(ArmyList armyList) {
         this.armyList = armyList;
-        newArmyScreen = new NewArmyScreen();
+        newArmyGui = new NewArmyGui();
         army = new Army();
         initControllers();
     }
 
     public NewArmyController(ArmyList armyList, Army army) {
         this.armyList = armyList;
-        newArmyScreen = new NewArmyScreen();
+        newArmyGui = new NewArmyGui();
         this.army = army;
         initControllers();
     }
 
 
     private void initControllers(){
-        newArmyScreen.getNewUnitButton().setOnAction(e ->{
-            army.setName(newArmyScreen.getArmyName().getText());
+        newArmyGui.getNewUnitButton().setOnAction(e ->{
+            army.setName(newArmyGui.getArmyName().getText());
             NewUnitController newUnitController = new NewUnitController(armyList, army);
-            NewUnitScreen newArmyScreen = newUnitController.getNewUnitScreen();
+            NewUnitGui newUnitGui = newUnitController.getNewUnitGui();
             Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(newArmyScreen.getScene());
+            primaryStage.setScene(newUnitGui.getScene());
             primaryStage.setFullScreen(true);
         });
-        newArmyScreen.getSaveButton().setOnAction(e->{
+        newArmyGui.getSaveButton().setOnAction(e->{
             saveArmy();
             armyList.addArmy(army);
 
-            WelcomeController welcomeController = new WelcomeController(armyList);
-            WelcomeScreen welcomeScreen = welcomeController.getWelcomeScreen();
+            ArmyChoiceController welcomeController = new ArmyChoiceController(armyList);
+            ArmyChoiceGui armyChoiceGui = welcomeController.getArmyChoiceGui();
             Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(welcomeScreen.getScene());
-            primaryStage.setFullScreen(true);
+            primaryStage.setScene(armyChoiceGui.getScene());
+            primaryStage.setMaximized(true);
         });
 
         fillUnitsView();
@@ -58,12 +58,12 @@ public class NewArmyController {
 
     private void updateArmyName() {
         if(!army.getName().equals("")){
-            newArmyScreen.getArmyName().setText(army.getName());
+            newArmyGui.getArmyName().setText(army.getName());
         }
     }
 
     private void saveArmy(){
-        TextField armyName = newArmyScreen.getArmyName();
+        TextField armyName = newArmyGui.getArmyName();
         if(!armyName.getText().equals("Enter Army Name Here")){
             army.setName(armyName.getText());
         }
@@ -73,7 +73,7 @@ public class NewArmyController {
     }
 
     private void fillUnitsView(){
-        VBox unitsView = newArmyScreen.getUnitsView();
+        VBox unitsView = newArmyGui.getUnitsView();
         unitsView.getChildren().clear();
         for(Unit unit : army.getUnits()){
             Label temp = new Label(unit.getName());
@@ -82,21 +82,21 @@ public class NewArmyController {
     }
 
     /**
-     * Getter for newArmyScreen
+     * Getter for newArmyGui
      *
-     * @return newArmyScreen
+     * @return newArmyGui
      */
-    public NewArmyScreen getNewArmyScreen() {
-        return newArmyScreen;
+    public NewArmyGui getNewArmyGui() {
+        return newArmyGui;
     }
 
     /**
-     * Setter for newArmyScreen
+     * Setter for newArmyGui
      *
-     * @param newArmyScreen - newArmyScreen
+     * @param newArmyGui - newArmyGui
      */
-    public void setNewArmyScreen(NewArmyScreen newArmyScreen) {
-        this.newArmyScreen = newArmyScreen;
+    public void setNewArmyGui(NewArmyGui newArmyGui) {
+        this.newArmyGui = newArmyGui;
     }
 
     /**
@@ -117,7 +117,7 @@ public class NewArmyController {
         this.armyList = armyList;
     }
 
-    private NewArmyScreen newArmyScreen;
+    private NewArmyGui newArmyGui;
     private ArmyList armyList;
     private Army army;
 }

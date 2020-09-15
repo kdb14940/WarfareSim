@@ -17,9 +17,9 @@ public class AppController extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        WelcomeController welcomeController = new WelcomeController();
-        window.setScene(welcomeController.getWelcomeScreen().getScene());
-        window.setFullScreen(true);
+        ArmyChoiceController armyChoiceController = new ArmyChoiceController();
+        window.setScene(armyChoiceController.getArmyChoiceGui().getScene());
+        window.setMaximized(true);
         window.show();
     }
 

@@ -329,6 +329,7 @@ public class Army implements Serializable {
         return units.size();
     }
 
+
     public String toString(){
         StringBuilder str = new StringBuilder();
         str.append(name + "\n");
@@ -337,5 +338,6 @@ public class Army implements Serializable {
         }
         return str.toString();
     }
+
 
 }

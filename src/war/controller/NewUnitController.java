@@ -11,43 +11,43 @@ import war.enums.Type;
 import war.model.Army;
 import war.model.ArmyList;
 import war.model.Unit;
-import war.view.NewArmyScreen;
-import war.view.NewUnitScreen;
+import war.view.NewArmyGui;
+import war.view.NewUnitGui;
 
 public class NewUnitController {
 
     public NewUnitController(ArmyList armyList, Army army) {
         this.armyList = armyList;
-        newUnitScreen = new NewUnitScreen();
+        newUnitGui = new NewUnitGui();
         this.army = army;
         initControllers();
     }
 
     private void initControllers(){
-        newUnitScreen.getSaveButton().setOnAction(e -> {
+        newUnitGui.getSaveButton().setOnAction(e -> {
             saveUnit();
 
             NewArmyController newArmyController = new NewArmyController(armyList, army);
-            NewArmyScreen newArmyScreen = newArmyController.getNewArmyScreen();
+            NewArmyGui newArmyGui = newArmyController.getNewArmyGui();
             Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(newArmyScreen.getScene());
-            primaryStage.setFullScreen(true);
+            primaryStage.setScene(newArmyGui.getScene());
+            primaryStage.setMaximized(true);
         });
     }
 
     private void saveUnit(){
         StringBuilder name = new StringBuilder();
-        TextField nameField = newUnitScreen.getNameField();
-        TextField strengthField = newUnitScreen.getStrengthField();
-        TextField powerField = newUnitScreen.getPowerField();
-        TextField defenseField = newUnitScreen.getDefenseField();
-        TextField toughnessField = newUnitScreen.getToughnessField();
-        TextField moraleField = newUnitScreen.getMoraleField();
+        TextField nameField = newUnitGui.getNameField();
+        TextField strengthField = newUnitGui.getStrengthField();
+        TextField powerField = newUnitGui.getPowerField();
+        TextField defenseField = newUnitGui.getDefenseField();
+        TextField toughnessField = newUnitGui.getToughnessField();
+        TextField moraleField = newUnitGui.getMoraleField();
 
-        ChoiceBox<Type> typeChoiceBox = newUnitScreen.getTypeChoiceBox();
-        ChoiceBox<Experience> experienceChoiceBox = newUnitScreen.getExperienceChoiceBox();
-        ChoiceBox<Equipment> equipmentChoiceBox = newUnitScreen.getEquipmentChoiceBox();
-        ChoiceBox<Integer> sizeChoiceBox = newUnitScreen.getSizeChoiceBox();
+        ChoiceBox<Type> typeChoiceBox = newUnitGui.getTypeChoiceBox();
+        ChoiceBox<Experience> experienceChoiceBox = newUnitGui.getExperienceChoiceBox();
+        ChoiceBox<Equipment> equipmentChoiceBox = newUnitGui.getEquipmentChoiceBox();
+        ChoiceBox<Integer> sizeChoiceBox = newUnitGui.getSizeChoiceBox();
 
         if(!nameField.getText().equals("Enter Name Here")) {
             name.append(nameField.getText());
@@ -115,21 +115,21 @@ public class NewUnitController {
     }
 
     /**
-     * Getter for newUnitScreen
+     * Getter for newUnitGui
      *
-     * @return newUnitScreen
+     * @return newUnitGui
      */
-    public NewUnitScreen getNewUnitScreen() {
-        return newUnitScreen;
+    public NewUnitGui getNewUnitGui() {
+        return newUnitGui;
     }
 
     /**
-     * Setter for newUnitScreen
+     * Setter for newUnitGui
      *
-     * @param newUnitScreen - newUnitScreen
+     * @param newUnitGui - newUnitGui
      */
-    public void setNewUnitScreen(NewUnitScreen newUnitScreen) {
-        this.newUnitScreen = newUnitScreen;
+    public void setNewUnitGui(NewUnitGui newUnitGui) {
+        this.newUnitGui = newUnitGui;
     }
 
     /**
@@ -152,6 +152,6 @@ public class NewUnitController {
 
     private Army army;
     private ArmyList armyList;
-    private NewUnitScreen newUnitScreen;
+    private NewUnitGui newUnitGui;
     private Unit unit;
 }
