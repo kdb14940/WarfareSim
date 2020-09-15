@@ -14,10 +14,9 @@ import static war.enums.Type.*;
 public class Army implements Serializable {
 
 
-    private final String LISTPATH = System.getProperty("user.dir")+"/resources/listOfArmies";
     private String name;
-    ArrayList<Unit> units;
-    int basePower;                          // power based on amount of units
+    private ArrayList<Unit> units;
+    private int basePower;                          // power based on amount of units
 
 
     public Army(){
@@ -44,87 +43,6 @@ public class Army implements Serializable {
         this.name = name;
     }
 
-
-    public void addArmiesFromFile(String filePath) throws FileNotFoundException{
-        File inFile = new File(filePath);
-        if(!inFile.exists())
-        {
-            throw new FileNotFoundException();
-        }
-        Scanner fileReader = new Scanner(inFile);
-        setName(fileReader.nextLine());
-        while(fileReader.hasNextLine())
-        {
-            String tempName;
-            int typeNum, equipNum, expNum;
-            Type tempType;
-            Equipment tempEquipment;
-            Experience tempExperience;
-            int tempSize;
-            int [] tempModifierArray = new int[5];
-            //TODO integer input validation
-                tempName = fileReader.nextLine();
-                typeNum = Integer.parseInt(fileReader.nextLine());
-                equipNum = Integer.parseInt(fileReader.nextLine());
-                expNum = Integer.parseInt(fileReader.nextLine());
-                tempSize = Integer.parseInt(fileReader.nextLine());
-                tempModifierArray[0] = Integer.parseInt(fileReader.nextLine());
-                tempModifierArray[1] = Integer.parseInt(fileReader.nextLine());
-                tempModifierArray[2] = Integer.parseInt(fileReader.nextLine());
-                tempModifierArray[3] = Integer.parseInt(fileReader.nextLine());
-                tempModifierArray[4] = Integer.parseInt(fileReader.nextLine());
-
-            switch(typeNum){
-                case 1 :    tempType = FLYING;
-                    break;
-                case 2 :    tempType = ARCHERS;
-                    break;
-                case 3 :    tempType = CAVALRY;
-                    break;
-                case 4 :    tempType = LEVIES;
-                    break;
-                case 5 :    tempType = INFANTRY;
-                    break;
-                case 6 :    tempType = SIEGE_ENGINE;
-                    break;
-                case 7 :    tempType = SPECIAL;
-                    break;
-                default:    tempType = LEVIES;
-                    break;
-            }
-            switch(equipNum){
-                case 1 : tempEquipment = Equipment.LIGHT;
-                    break;
-                case 2 : tempEquipment = Equipment.MEDIUM;
-                    break;
-                case 3 : tempEquipment = Equipment.HEAVY;
-                    break;
-                case 4 : tempEquipment = Equipment.SUPER_HEAVY;
-                    break;
-                default : tempEquipment = Equipment.LIGHT;
-                    break;
-            }
-            switch(expNum){
-                case 1 : tempExperience = Experience.GREEN;
-                    break;
-                case 2 : tempExperience = Experience.REGULAR;
-                    break;
-                case 3 : tempExperience = Experience.SEASONED;
-                    break;
-                case 4 : tempExperience = Experience.VETERAN;
-                    break;
-                case 5 : tempExperience = Experience.ELITE;
-                    break;
-                case 6 : tempExperience = Experience.SUPER_ELITE;
-                    break;
-                default: tempExperience = Experience.GREEN;
-                    break;
-            }
-            Unit tempUnit = new Unit(tempName, tempType, tempEquipment, tempExperience, tempSize, tempModifierArray);
-            units.add(tempUnit);
-        }
-        updateBasePower();
-    }
 
     public int getPyrrhicCasualties(boolean winner){
         int totalCasualties = 0;

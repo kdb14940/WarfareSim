@@ -7,6 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import war.BattleSimulator;
 import war.model.Unit;
 import war.view.ArmyChoiceGui;
 import war.view.BattleGui;
@@ -35,7 +36,7 @@ public class BattleController {
         });
 
         battleGui.getNextRoundButton().setOnAction(e ->{
-
+            BattleSimulator.battle(army1, army2);
         });
 
         battleGui.getExitButton().setOnAction(e ->{

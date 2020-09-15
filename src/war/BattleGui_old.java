@@ -84,25 +84,6 @@ public class BattleGui_old extends Application{
         welcomeScene = new Scene(welcomeLayout, 800, 600);
 
         continueButton.setOnAction(e -> {
-
-            //TODO IF STATEMENT DOESNT WORK
-            if(!army1Choicebox.getValue().isEmpty() && !army2Choicebox.getValue().isEmpty())
-            {
-                // create filepath from user choice
-                String filePath1 = System.getProperty("user.dir")+"/resources/" + army1Choicebox.getValue();
-                String filePath2 = System.getProperty("user.dir")+"/resources/" + army2Choicebox.getValue();
-
-                // add armies from the designated file paths
-                try{
-                    army1.addArmiesFromFile(filePath1);
-                    army2.addArmiesFromFile(filePath2);
-                }
-                catch(FileNotFoundException e2){
-                    System.out.println("Army file not found!");
-                }
-                battle();
-                //TODO Exception handling
-            }
         });
 
         // button for creating a new army

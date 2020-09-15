@@ -52,6 +52,7 @@ public class ArmyChoiceController {
             primaryStage.setHeight(bounds.getHeight());
             primaryStage.setMaximized(true);
         });
+
         armyChoiceGui.getContinueButton().setOnAction(e ->{
             saveAllData();
             Army army1 = armyChoiceGui.getArmy1ComboBox().getValue();

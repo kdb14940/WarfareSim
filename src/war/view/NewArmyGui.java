@@ -18,19 +18,14 @@ public class NewArmyGui {
     private void initComponents(){
         layout = new HBox(50);
         unitsView = new ArmyTableView();
-        unitsColumn = new VBox(20);
         newUnitButton = new Button("Add New Unit");
         saveButton = new Button("Save Army");
-        unitsLabel = new Label("Units");
         armyName = new TextField("Enter Army Name Here");
     }
 
     private void layoutComponents(){
-        unitsColumn.getChildren().add(armyName);
-        unitsColumn.getChildren().add(unitsLabel);
-        unitsColumn.getChildren().add(unitsView);
 
-        layout.getChildren().addAll(unitsColumn, newUnitButton, saveButton);
+        layout.getChildren().addAll(unitsView, armyName, newUnitButton, saveButton);
         scene = new Scene(layout);
     }
 
@@ -124,23 +119,6 @@ public class NewArmyGui {
         this.saveButton = saveButton;
     }
 
-    /**
-     * Getter for unitsLabel
-     *
-     * @return unitsLabel
-     */
-    public Label getUnitsLabel() {
-        return unitsLabel;
-    }
-
-    /**
-     * Setter for unitsLabel
-     *
-     * @param unitsLabel - unitsLabel
-     */
-    public void setUnitsLabel(Label unitsLabel) {
-        this.unitsLabel = unitsLabel;
-    }
 
     /**
      * Getter for armyName
@@ -184,7 +162,6 @@ public class NewArmyGui {
     private VBox unitsColumn;
     private Button newUnitButton;
     private Button saveButton;
-    private Label unitsLabel;
     private TextField armyName;
 
 }

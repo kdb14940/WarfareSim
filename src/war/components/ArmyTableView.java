@@ -28,7 +28,8 @@ public class ArmyTableView extends TableView {
     }
 
     public void createColumns(){
-        nameColumn = new TableColumn<>("Name");
+        titleColumn = new TableColumn<>();
+        nameColumn = new TableColumn<>("Unit Name");
         attackColumn = new TableColumn<>("Attack");
         powerColumn = new TableColumn<>("Power");
         defenseColumn = new TableColumn<>("Defense");
@@ -54,6 +55,8 @@ public class ArmyTableView extends TableView {
         moraleColumn.setCellValueFactory(new PropertyValueFactory<>("moraleBonus"));
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
         costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
+        
+        this.getColumns().add(titleColumn);
     }
 
     public void fillTable(){
@@ -63,59 +66,59 @@ public class ArmyTableView extends TableView {
     }
     
     public void addNameColumn(){
-        this.getColumns().add(nameColumn);
+        titleColumn.getColumns().add(nameColumn);
     }
     
     public void addAttackColumn(){
-        this.getColumns().add(attackColumn);
+        titleColumn.getColumns().add(attackColumn);
     }
     
     public void addDefenseColumn(){
-        this.getColumns().add(defenseColumn);
+        titleColumn.getColumns().add(defenseColumn);
     }
     
     public void addCostColumn(){
-        this.getColumns().add(costColumn);
+        titleColumn.getColumns().add(costColumn);
     }
     
     public void addPowerColumn(){
-        this.getColumns().add(powerColumn);
+        titleColumn.getColumns().add(powerColumn);
     }
     
     public void addMoraleColumn(){
-        this.getColumns().add(moraleColumn);
+        titleColumn.getColumns().add(moraleColumn);
     }
     
     public void addToughnessColumn(){
-        this.getColumns().add(toughnessColumn);
+        titleColumn.getColumns().add(toughnessColumn);
     }
 
     public void removeNameColumn(){
-        this.getColumns().remove(nameColumn);
+        titleColumn.getColumns().remove(nameColumn);
     }
 
     public void removeAttackColumn(){
-        this.getColumns().remove(attackColumn);
+        titleColumn.getColumns().remove(attackColumn);
     }
 
     public void removeDefenseColumn(){
-        this.getColumns().remove(defenseColumn);
+        titleColumn.getColumns().remove(defenseColumn);
     }
 
     public void removeCostColumn(){
-        this.getColumns().remove(costColumn);
+        titleColumn.getColumns().remove(costColumn);
     }
 
     public void removePowerColumn(){
-        this.getColumns().remove(powerColumn);
+        titleColumn.getColumns().remove(powerColumn);
     }
 
     public void removeMoraleColumn(){
-        this.getColumns().remove(moraleColumn);
+        titleColumn.getColumns().remove(moraleColumn);
     }
 
     public void removeToughnessColumn(){
-        this.getColumns().remove(toughnessColumn);
+        titleColumn.getColumns().remove(toughnessColumn);
     }
 
 
@@ -139,6 +142,7 @@ public class ArmyTableView extends TableView {
         this.army = army;
         this.obArmy = FXCollections.observableArrayList(army.getUnits());
         fillTable();
+        titleColumn.setText(army.getName());
     }
 
     /**
@@ -302,6 +306,8 @@ public class ArmyTableView extends TableView {
     public void setCostColumn(TableColumn<Unit, Integer> costColumn) {
         this.costColumn = costColumn;
     }
+    
+    
 
     private Army army;
     private ObservableList<Unit> obArmy;
@@ -313,5 +319,6 @@ public class ArmyTableView extends TableView {
     private TableColumn<Unit, Integer> moraleColumn;
     private TableColumn<Unit, Integer> sizeColumn;
     private TableColumn<Unit, Integer> costColumn;
+    private TableColumn<Unit, String> titleColumn;
 
 }
