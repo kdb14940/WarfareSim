@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import war.components.ArmyTableView;
 
 public class NewArmyGui {
 
@@ -16,7 +17,7 @@ public class NewArmyGui {
 
     private void initComponents(){
         layout = new HBox(50);
-        unitsView = new VBox(20);
+        unitsView = new ArmyTableView();
         unitsColumn = new VBox(20);
         newUnitButton = new Button("Add New Unit");
         saveButton = new Button("Save Army");
@@ -74,7 +75,7 @@ public class NewArmyGui {
      *
      * @return unitsView
      */
-    public VBox getUnitsView() {
+    public ArmyTableView getUnitsView() {
         return unitsView;
     }
 
@@ -83,7 +84,7 @@ public class NewArmyGui {
      *
      * @param unitsView - unitsView
      */
-    public void setUnitsView(VBox unitsView) {
+    public void setUnitsView(ArmyTableView unitsView) {
         this.unitsView = unitsView;
     }
 
@@ -179,7 +180,7 @@ public class NewArmyGui {
 
     private Scene scene;
     private HBox layout;
-    private VBox unitsView;
+    private ArmyTableView unitsView;
     private VBox unitsColumn;
     private Button newUnitButton;
     private Button saveButton;

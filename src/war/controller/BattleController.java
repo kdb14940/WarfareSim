@@ -29,8 +29,10 @@ public class BattleController {
         battleGui.getNextRoundButton().setOnAction(e ->{
 
         });
-        displayArmyTable(army1, battleGui.getArmy1Table());
-        displayArmyTable(army2, battleGui.getArmy2Table());
+        battleGui.getArmy1Table().setArmy(army1);
+        battleGui.getArmy2Table().setArmy(army2);
+        //displayArmyTable(army1, battleGui.getArmy1Table());
+        //displayArmyTable(army2, battleGui.getArmy2Table());
         setChart(army1, army2, battleGui.getBattleChart());
 
     }

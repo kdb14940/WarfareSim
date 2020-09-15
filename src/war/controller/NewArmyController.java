@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import war.components.ArmyTableView;
 import war.model.Unit;
 import war.model.Army;
 import war.model.ArmyList;
@@ -73,12 +74,15 @@ public class NewArmyController {
     }
 
     private void fillUnitsView(){
-        VBox unitsView = newArmyGui.getUnitsView();
-        unitsView.getChildren().clear();
-        for(Unit unit : army.getUnits()){
-            Label temp = new Label(unit.getName());
-            unitsView.getChildren().add(temp);
-        }
+        ArmyTableView unitsView = newArmyGui.getUnitsView();
+        unitsView.setArmy(army);
+        unitsView.addNameColumn();
+        unitsView.addAttackColumn();
+        unitsView.addDefenseColumn();
+        unitsView.addToughnessColumn();
+        unitsView.addPowerColumn();
+        unitsView.addMoraleColumn();
+        unitsView.addCostColumn();
     }
 
     /**

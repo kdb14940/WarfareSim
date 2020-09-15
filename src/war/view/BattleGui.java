@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import war.components.ArmyTableView;
 import war.model.Unit;
 
 public class BattleGui {
@@ -20,8 +21,10 @@ public class BattleGui {
     private void initComponents(){
         saveButton = new Button("Save");
         nextRoundButton = new Button("Next Round");
-        army1Table = new TableView<>();
-        army2Table = new TableView<>();
+        army1Table = new ArmyTableView();
+        army2Table = new ArmyTableView();
+        setTableColumns(army1Table);
+        setTableColumns(army2Table);
 
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -36,6 +39,11 @@ public class BattleGui {
     private void layoutComponents(){
         buttonLayout.getChildren().addAll(nextRoundButton,saveButton);
         hLayout.getChildren().addAll(army1Table, army2Table, battleChart, buttonLayout);
+    }
+
+    private void setTableColumns(ArmyTableView table){
+        table.addNameColumn();
+        table.addCostColumn();
     }
 
     /**
@@ -97,7 +105,7 @@ public class BattleGui {
      *
      * @return army1Table
      */
-    public TableView<Unit> getArmy1Table() {
+    public ArmyTableView getArmy1Table() {
         return army1Table;
     }
 
@@ -106,7 +114,7 @@ public class BattleGui {
      *
      * @param army1Table - army1Table
      */
-    public void setArmy1Table(TableView<Unit> army1Table) {
+    public void setArmy1Table(ArmyTableView army1Table) {
         this.army1Table = army1Table;
     }
 
@@ -115,7 +123,7 @@ public class BattleGui {
      *
      * @return army2Table
      */
-    public TableView<Unit> getArmy2Table() {
+    public ArmyTableView getArmy2Table() {
         return army2Table;
     }
 
@@ -124,7 +132,7 @@ public class BattleGui {
      *
      * @param army2Table - army2Table
      */
-    public void setArmy2Table(TableView<Unit> army2Table) {
+    public void setArmy2Table(ArmyTableView army2Table) {
         this.army2Table = army2Table;
     }
 
@@ -149,8 +157,8 @@ public class BattleGui {
     private Scene scene;
     private Button saveButton;
     private Button nextRoundButton;
-    private TableView<Unit> army1Table;
-    private TableView<Unit> army2Table;
+    private ArmyTableView army1Table;
+    private ArmyTableView army2Table;
     private BarChart<String, Number> battleChart;
 
 
