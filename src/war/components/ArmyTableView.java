@@ -15,12 +15,14 @@ public class ArmyTableView extends TableView {
 
     public ArmyTableView(){
         super();
+        this.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
         createColumns();
     }
     public ArmyTableView(Army army) {
         super();
         this.army = army;
         this.obArmy = FXCollections.observableArrayList(army.getUnits());
+        this.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
         createColumns();
         fillTable();
     }
@@ -52,9 +54,6 @@ public class ArmyTableView extends TableView {
         moraleColumn.setCellValueFactory(new PropertyValueFactory<>("moraleBonus"));
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
         costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
-
-        //fillTable();
-        //tableView.getColumns().addAll(nameColumn, costColumn);
     }
 
     public void fillTable(){
