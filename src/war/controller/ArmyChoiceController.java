@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.SnapshotResult;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -14,16 +13,18 @@ import javafx.util.Callback;
 import war.model.Army;
 import war.model.ArmyList;
 import war.view.BattleGui;
+import war.view.Gui;
 import war.view.NewArmyGui;
 import war.view.ArmyChoiceGui;
 
 import java.io.*;
 
 
-public class ArmyChoiceController {
+public class ArmyChoiceController extends Controller{
 
     public ArmyChoiceController( ArmyList armyList) {
-        this.armyChoiceGui = new ArmyChoiceGui();
+        this.gui = new ArmyChoiceGui();
+        armyChoiceGui = (ArmyChoiceGui)gui;
         this.armyList = armyList;
         initControllers();
         initComboBox(armyChoiceGui.getArmy1ComboBox());
@@ -31,7 +32,8 @@ public class ArmyChoiceController {
     }
 
     public ArmyChoiceController() {
-        this.armyChoiceGui = new ArmyChoiceGui();
+        this.gui = new ArmyChoiceGui();
+        this.armyChoiceGui = (ArmyChoiceGui)gui;
         this.armyList = new ArmyList();
         getAllData();
         initControllers();
@@ -41,16 +43,7 @@ public class ArmyChoiceController {
 
     private void initControllers(){
         armyChoiceGui.getNewArmyButton().setOnAction(e ->{
-            NewArmyController newArmyController = new NewArmyController(armyList);
-            NewArmyGui newArmyGui = newArmyController.getNewArmyGui();
-            Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(newArmyGui.getScene());
-
-            Screen screen = Screen.getPrimary();
-            Rectangle2D bounds = screen.getVisualBounds();
-            primaryStage.setWidth(bounds.getWidth());
-            primaryStage.setHeight(bounds.getHeight());
-            primaryStage.setMaximized(true);
+            passControl(new NewArmyController(armyList), e);
         });
 
         armyChoiceGui.getContinueButton().setOnAction(e ->{
@@ -58,15 +51,7 @@ public class ArmyChoiceController {
             Army army1 = armyChoiceGui.getArmy1ComboBox().getValue();
             Army army2 = armyChoiceGui.getArmy2ComboBox().getValue();
             BattleController battleController = new BattleController(army1, army2);
-            BattleGui battleGui = battleController.getBattleGui();
-            Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(battleGui.getScene());
-
-            Screen screen = Screen.getPrimary();
-            Rectangle2D bounds = screen.getVisualBounds();
-            primaryStage.setWidth(bounds.getWidth());
-            primaryStage.setHeight(bounds.getHeight());
-            primaryStage.setMaximized(true);
+            passControl(battleController, e);
 
         });
 
@@ -189,8 +174,8 @@ public class ArmyChoiceController {
     public void setArmyList(ArmyList armyList) {
         this.armyList = armyList;
     }
-
-    private ArmyChoiceGui armyChoiceGui;
+    
     private ArmyList armyList;
+    private ArmyChoiceGui armyChoiceGui;
     private String FILE_PATH = "./resources/armies.dat";
 }

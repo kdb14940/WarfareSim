@@ -13,12 +13,6 @@ import static war.enums.Type.*;
 
 public class Army implements Serializable {
 
-
-    private String name;
-    private ArrayList<Unit> units;
-    private int basePower;                          // power based on amount of units
-
-
     public Army(){
         units = new ArrayList<>();
         basePower = 0;
@@ -257,5 +251,8 @@ public class Army implements Serializable {
         return str.toString();
     }
 
+    private String name;
+    private ArrayList<Unit> units;
+    private int basePower;                          // power based on amount of units
 
 }

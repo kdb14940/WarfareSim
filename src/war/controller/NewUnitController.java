@@ -14,11 +14,12 @@ import war.model.Unit;
 import war.view.NewArmyGui;
 import war.view.NewUnitGui;
 
-public class NewUnitController {
+public class NewUnitController extends Controller {
 
     public NewUnitController(ArmyList armyList, Army army) {
         this.armyList = armyList;
-        newUnitGui = new NewUnitGui();
+        gui = new NewUnitGui();
+        newUnitGui = (NewUnitGui)gui;
         this.army = army;
         initControllers();
     }
@@ -28,10 +29,7 @@ public class NewUnitController {
             saveUnit();
 
             NewArmyController newArmyController = new NewArmyController(armyList, army);
-            NewArmyGui newArmyGui = newArmyController.getNewArmyGui();
-            Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(newArmyGui.getScene());
-            primaryStage.setMaximized(true);
+            passControl(newArmyController, e);
         });
     }
 

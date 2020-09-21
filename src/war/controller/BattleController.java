@@ -7,7 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import war.BattleSimulator;
+import war.battle.BattleSimulator;
 import war.model.Unit;
 import war.view.ArmyChoiceGui;
 import war.view.BattleGui;
@@ -15,10 +15,11 @@ import war.model.Army;
 
 import java.util.ArrayList;
 
-public class BattleController {
+public class BattleController extends Controller{
 
     public BattleController(Army army1, Army army2) {
-        this.battleGui = new BattleGui();
+        gui = new BattleGui();
+        this.battleGui = (BattleGui)gui;
         this.army1 = army1;
         this.army2 = army2;
         initControllers();
@@ -28,11 +29,7 @@ public class BattleController {
     private void initControllers(){
         battleGui.getSaveButton().setOnAction(e ->{
             //TODO write the changes to file?
-            ArmyChoiceController armyChoiceController = new ArmyChoiceController();
-            ArmyChoiceGui armyChoiceGui = armyChoiceController.getArmyChoiceGui();
-            Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(armyChoiceGui.getScene());
-            primaryStage.setMaximized(true);
+            passControl(new ArmyChoiceController(), e);
         });
 
         battleGui.getNextRoundButton().setOnAction(e ->{
@@ -40,59 +37,13 @@ public class BattleController {
         });
 
         battleGui.getExitButton().setOnAction(e ->{
-            ArmyChoiceController armyChoiceController = new ArmyChoiceController();
-            ArmyChoiceGui armyChoiceGui = armyChoiceController.getArmyChoiceGui();
-            Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(armyChoiceGui.getScene());
-            primaryStage.setMaximized(true);
+            passControl(new ArmyChoiceController(), e);
         });
 
         battleGui.getArmy1Table().setArmy(army1);
         battleGui.getArmy2Table().setArmy(army2);
         setChart(army1, army2, battleGui.getBattleChart());
 
-    }
-
-    private void displayArmyTable(Army army, TableView<Unit> tableView){
-        //columns
-        TableColumn<Unit, String> nameColumn = new TableColumn<>("Name");
-        //TableColumn<Unit, Integer> attackColumn = new TableColumn<>("Attack");
-        //TableColumn<Unit, Integer> powerColumn = new TableColumn<>("Power");
-        //TableColumn<Unit, Integer> defenseColumn = new TableColumn<>("Defense");
-        //TableColumn<Unit, Integer> toughnessColumn = new TableColumn<>("Toughness");
-        //TableColumn<Unit, Integer> moraleColumn = new TableColumn<>("Morale");
-        //TableColumn<Unit, Integer> sizeColumn = new TableColumn<>("Size");
-        TableColumn<Unit, Integer> costColumn = new TableColumn<>("Cost");
-
-        nameColumn.setMinWidth(200);
-        //attackColumn.setMinWidth(20);
-        //powerColumn.setMinWidth(20);
-        //defenseColumn.setMinWidth(20);
-        //toughnessColumn.setMinWidth(20);
-        //moraleColumn.setMinWidth(20);
-        //sizeColumn.setMinWidth(20);
-        costColumn.setMinWidth(20);
-
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        //attackColumn.setCellValueFactory(new PropertyValueFactory<>("attackBonus"));
-        //powerColumn.setCellValueFactory(new PropertyValueFactory<>("powerBonus"));
-        //defenseColumn.setCellValueFactory(new PropertyValueFactory<>("defenseBonus"));
-        //toughnessColumn.setCellValueFactory(new PropertyValueFactory<>("toughnessBonus"));
-        //moraleColumn.setCellValueFactory(new PropertyValueFactory<>("moraleBonus"));
-        //sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
-        costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
-
-        updateArmyTable(army, tableView);
-        tableView.getColumns().addAll(nameColumn, costColumn);
-
-    }
-
-    private void updateArmyTable(Army army, TableView<Unit> tableView){
-        tableView.getItems().clear();
-        ArrayList<Unit> unitList = army.getUnits();
-        for(Unit unit : unitList){
-            tableView.getItems().add(unit);
-        }
     }
 
     private void setChart(Army army1, Army army2, BarChart chart){

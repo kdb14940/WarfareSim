@@ -9,13 +9,14 @@ import javafx.scene.layout.VBox;
 import war.model.Army;
 
 
-public class ArmyChoiceGui {
+public class ArmyChoiceGui extends Gui{
 
 
     public ArmyChoiceGui() {
         initComponents();
         layoutComponents();
     }
+
 
     private void initComponents(){
         layout = new HBox(10);
@@ -28,8 +29,7 @@ public class ArmyChoiceGui {
         army2ComboBox = new ComboBox<>();
         army1Label = new Label("Army 1");
         army2Label = new Label("Army 2");
-
-        scene = new Scene(layout);
+        scene = new Scene(layout, 800, 600);
     }
 
     private void layoutComponents(){
@@ -38,23 +38,6 @@ public class ArmyChoiceGui {
         layout.getChildren().addAll(army1Choice, army2Choice, newArmyButton, continueButton, exitButton);
     }
 
-    /**
-     * Getter for scene
-     *
-     * @return scene
-     */
-    public Scene getScene() {
-        return scene;
-    }
-
-    /**
-     * Setter for scene
-     *
-     * @param scene - scene
-     */
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
 
     /**
      * Getter for layout
@@ -200,7 +183,6 @@ public class ArmyChoiceGui {
         this.exitButton = exitButton;
     }
 
-    private Scene scene;
     private HBox layout;
     private VBox army1Choice;
     private VBox army2Choice;

@@ -9,24 +9,27 @@ import war.components.ArmyTableView;
 import war.model.Unit;
 import war.model.Army;
 import war.model.ArmyList;
+import war.view.Gui;
 import war.view.NewArmyGui;
 import war.view.NewUnitGui;
 import war.view.ArmyChoiceGui;
 
 
-public class NewArmyController {
+public class NewArmyController extends Controller{
 
 
     public NewArmyController(ArmyList armyList) {
         this.armyList = armyList;
-        newArmyGui = new NewArmyGui();
+        gui = new NewArmyGui();
+        newArmyGui = (NewArmyGui)gui;
         army = new Army();
         initControllers();
     }
 
     public NewArmyController(ArmyList armyList, Army army) {
         this.armyList = armyList;
-        newArmyGui = new NewArmyGui();
+        gui = new NewArmyGui();
+        newArmyGui = (NewArmyGui)gui;
         this.army = army;
         initControllers();
     }
@@ -36,20 +39,14 @@ public class NewArmyController {
         newArmyGui.getNewUnitButton().setOnAction(e ->{
             army.setName(newArmyGui.getArmyName().getText());
             NewUnitController newUnitController = new NewUnitController(armyList, army);
-            NewUnitGui newUnitGui = newUnitController.getNewUnitGui();
-            Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(newUnitGui.getScene());
-            primaryStage.setMaximized(true);
+            passControl(newUnitController, e);
         });
         newArmyGui.getSaveButton().setOnAction(e->{
             saveArmy();
             armyList.addArmy(army);
-
             ArmyChoiceController armyChoiceController = new ArmyChoiceController(armyList);
-            ArmyChoiceGui armyChoiceGui = armyChoiceController.getArmyChoiceGui();
-            Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            primaryStage.setScene(armyChoiceGui.getScene());
-            primaryStage.setMaximized(true);
+
+            passControl(armyChoiceController, e);
         });
 
         fillUnitsView();

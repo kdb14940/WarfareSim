@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import war.components.ArmyTableView;
 
-public class NewArmyGui {
+public class NewArmyGui extends Gui{
 
     public NewArmyGui(){
         initComponents();
@@ -27,24 +27,6 @@ public class NewArmyGui {
 
         layout.getChildren().addAll(unitsView, armyName, newUnitButton, saveButton);
         scene = new Scene(layout);
-    }
-
-    /**
-     * Getter for scene
-     *
-     * @return scene
-     */
-    public Scene getScene() {
-        return scene;
-    }
-
-    /**
-     * Setter for scene
-     *
-     * @param scene - scene
-     */
-    public void setScene(Scene scene) {
-        this.scene = scene;
     }
 
     /**
@@ -156,7 +138,6 @@ public class NewArmyGui {
         this.unitsColumn = unitsColumn;
     }
 
-    private Scene scene;
     private HBox layout;
     private ArmyTableView unitsView;
     private VBox unitsColumn;

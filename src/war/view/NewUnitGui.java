@@ -11,7 +11,7 @@ import war.enums.Equipment;
 import war.enums.Experience;
 import war.enums.Type;
 
-public class NewUnitGui {
+public class NewUnitGui extends Gui{
 
     public NewUnitGui() {
         initComponents();
@@ -290,23 +290,6 @@ public class NewUnitGui {
         this.moraleField = moraleField;
     }
 
-    /**
-     * Getter for scene
-     *
-     * @return scene
-     */
-    public Scene getScene() {
-        return scene;
-    }
-
-    /**
-     * Setter for scene
-     *
-     * @param scene - scene
-     */
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
 
     private Button saveButton;
     private TextField nameField;
@@ -334,7 +317,6 @@ public class NewUnitGui {
     private TextField moraleField;
 
     //layouts
-    private Scene scene;
     private HBox layout;
     private VBox nameLayout;
     private VBox typeLayout;

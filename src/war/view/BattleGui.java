@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import war.components.ArmyTableView;
 import war.model.Unit;
 
-public class BattleGui {
+public class BattleGui extends Gui{
 
     public BattleGui(){
         initComponents();
@@ -45,24 +45,6 @@ public class BattleGui {
     private void setTableColumns(ArmyTableView table){
         table.addNameColumn();
         table.addCostColumn();
-    }
-
-    /**
-     * Getter for scene
-     *
-     * @return scene
-     */
-    public Scene getScene() {
-        return scene;
-    }
-
-    /**
-     * Setter for scene
-     *
-     * @param scene - scene
-     */
-    public void setScene(Scene scene) {
-        this.scene = scene;
     }
 
     /**
@@ -173,7 +155,6 @@ public class BattleGui {
         this.exitButton = exitButton;
     }
 
-    private Scene scene;
     private Button saveButton;
     private Button exitButton;
     private Button nextRoundButton;
