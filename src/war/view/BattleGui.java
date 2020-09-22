@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import war.components.ArmyTableView;
+import war.components.BoardPane;
 import war.model.Unit;
 
 public class BattleGui extends Gui{
