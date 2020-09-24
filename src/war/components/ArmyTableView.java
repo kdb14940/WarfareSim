@@ -3,11 +3,13 @@ package war.components;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import war.model.Army;
 import war.model.Unit;
 
+import java.util.ArrayList;
 
 
 public class ArmyTableView extends TableView {
@@ -26,6 +28,18 @@ public class ArmyTableView extends TableView {
         createColumns();
         fillTable();
     }
+
+    /**
+    public void createRows(){
+        setRowFactory( e->{
+            TableRow<Unit> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                selectedUnit = row.getItem();
+            });
+            return row ;
+        });
+    }
+     */
 
     public void createColumns(){
         titleColumn = new TableColumn<>();
@@ -306,10 +320,33 @@ public class ArmyTableView extends TableView {
     public void setCostColumn(TableColumn<Unit, Integer> costColumn) {
         this.costColumn = costColumn;
     }
-    
-    
+
+    /**
+     * Getter for selectedUnit
+     *
+     * @return selectedUnit
+     */
+    public Unit getSelectedUnit() {
+        return selectedUnit;
+    }
+
+    /**
+     * Setter for selectedUnit
+     *
+     * @param selectedUnit - selectedUnit
+     */
+    public void setSelectedUnit(Unit selectedUnit) {
+        this.selectedUnit = selectedUnit;
+    }
+
+    public void setUnits(ArrayList<Unit> units){
+        this.obArmy = FXCollections.observableArrayList(units);
+        fillTable();
+        titleColumn.setText("Reserves");
+    }
 
     private Army army;
+    private Unit selectedUnit;
     private ObservableList<Unit> obArmy;
     private TableColumn<Unit, String> nameColumn;
     private TableColumn<Unit, Integer> attackColumn;

@@ -21,6 +21,7 @@ public class Unit implements Serializable {
     private int defenseBonus;
     private int toughnessBonus;
     private int moraleBonus;
+    private int commandBonus;
 
     private int size;
 
@@ -59,6 +60,7 @@ public class Unit implements Serializable {
         defenseBonus += additionalBonuses[2];
         toughnessBonus += additionalBonuses[3];
         moraleBonus += additionalBonuses[4];
+        //commandBonus += additionalBonuses[5];
     }
 
     /**
@@ -203,5 +205,23 @@ public class Unit implements Serializable {
 
     public String toString(){
         return name;
+    }
+
+    /**
+     * Getter for commandBonus
+     *
+     * @return commandBonus
+     */
+    public int getCommandBonus() {
+        return commandBonus;
+    }
+
+    /**
+     * Setter for commandBonus
+     *
+     * @param commandBonus - commandBonus
+     */
+    public void setCommandBonus(int commandBonus) {
+        this.commandBonus = commandBonus;
     }
 }

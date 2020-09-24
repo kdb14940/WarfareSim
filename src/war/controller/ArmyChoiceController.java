@@ -50,8 +50,9 @@ public class ArmyChoiceController extends Controller{
             saveAllData();
             Army army1 = armyChoiceGui.getArmy1ComboBox().getValue();
             Army army2 = armyChoiceGui.getArmy2ComboBox().getValue();
-            BattleController battleController = new BattleController(army1, army2);
-            passControl(battleController, e);
+            //BattleController battleController = new BattleController(army1, army2);
+            GameBoardController gameBoardController = new GameBoardController(army1, army2);
+            passControl(gameBoardController, e);
 
         });
 
