@@ -45,22 +45,25 @@ public class GameBoardController extends Controller {
             Tile[][] board = boardPane.getBoard();
             for(int i = 0; i < board.length; i++){
                 for(int j = 0; j < board[0].length; j++){
-                    if(isInBounds(xPos, yPos, board[i][j])){
-                        board[i][j].getBg().setFill(Color.YELLOW);
+                    if(isInBounds(xPos, yPos, board[i][j]) && selectedUnit != null){
+                        board[i][j].setBorder(Color.YELLOW);
                         //TODO This is where you place a piece
-                        Piece piece = new Piece((int)xPos, (int)yPos);
-
-                        //TODO
+                        //TODO needs code cleanup
+                        Piece piece = new Piece();
                         piece.setUnit(selectedUnit);
                         boardPane.getPieceGroup().getChildren().add(piece);
                         reservesList.remove(selectedUnit);
                         gameBoardGui.getArmyTable().setUnits(reservesList);
 
-                        piece.layoutXProperty().bind(boardPane.widthProperty().divide(board[0].length).multiply(j));
-                        piece.layoutYProperty().bind(boardPane.heightProperty().divide(board.length).multiply(i));
+                        piece.layoutXProperty().bind(boardPane.widthProperty().divide(board[0].length).multiply(j).
+                                add(board[i][j].widthProperty().divide(4)));
+                        piece.layoutYProperty().bind(boardPane.heightProperty().divide(board.length).multiply(i).
+                                add(board[i][j].heightProperty().divide(4)));
+                        
                         piece.getBg().radiusXProperty().bind(boardPane.widthProperty().divide(board[0].length).divide(4));
                         piece.getBg().radiusYProperty().bind(boardPane.heightProperty().divide(board.length).divide(4));
                         board[i][j].setPiece(piece);
+
                     }
 
                 }
@@ -69,6 +72,7 @@ public class GameBoardController extends Controller {
         });
 
     }
+
 
     public boolean isInBounds(double xPos, double yPos, Tile tile ){
         if(tile.getX() < xPos && xPos < tile.getX() + tile.getWidth()){

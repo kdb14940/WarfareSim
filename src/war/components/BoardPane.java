@@ -9,13 +9,6 @@ import javafx.scene.shape.Rectangle;
 
 public class BoardPane extends Pane {
 
-
-    /**
-     * TODO - UNBIND X AND Y
-     * Create a way to load up the pieces of each unit
-     * Create armytable to create units from
-     *
-     */
     public BoardPane() {
         final int row = 8;
         final int col = 5;
@@ -47,35 +40,12 @@ public class BoardPane extends Pane {
                 tile.layoutXProperty().bind(this.widthProperty().divide(cols).multiply(col));
                 tile.layoutYProperty().bind(this.heightProperty().divide(rows).multiply(row));
 
+                //TODO Clean this into its own function
                 tile.getBg().xProperty().bind(this.widthProperty().divide(cols).multiply(col));
                 tile.getBg().yProperty().bind(this.heightProperty().divide(rows).multiply(row));
                 tile.getBg().widthProperty().bind(this.widthProperty().divide(cols));
                 tile.getBg().heightProperty().bind(this.heightProperty().divide(rows));
 
-
-                /**
-                Piece piece = null;
-
-                if (row <= 2 && (col + row) % 2 != 0) {
-                    piece = new Piece(row, col);
-                    piece.layoutXProperty().bind(this.widthProperty().divide(cols).multiply(col));
-                    piece.layoutYProperty().bind(this.heightProperty().divide(rows).multiply(row));
-                    piece.getBg().radiusXProperty().bind(this.widthProperty().divide(cols).divide(4));
-                    piece.getBg().radiusYProperty().bind(this.heightProperty().divide(rows).divide(4));
-                }
-                if (row >= 5 && (col + row) % 2 != 0) {
-                    piece = new Piece(row, col);
-                    piece.layoutXProperty().bind(this.widthProperty().divide(cols).multiply(col));
-                    piece.layoutYProperty().bind(this.heightProperty().divide(rows).multiply(row));
-                    piece.getBg().radiusXProperty().bind(this.widthProperty().divide(cols).divide(4));
-                    piece.getBg().radiusYProperty().bind(this.heightProperty().divide(rows).divide(4));
-                }
-
-                if (piece != null) {
-                    tile.setPiece(piece);
-                    pieceGroup.getChildren().add(piece);
-                }
-                 */
             }
         }
     }

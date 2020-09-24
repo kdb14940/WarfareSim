@@ -11,20 +11,22 @@ import static javafx.scene.paint.Color.WHITE;
 public class Tile extends StackPane {
 
     public Tile(boolean light){
-        bg = new Rectangle();
+        border = new Rectangle();
         innerTile = new Rectangle();
-        bg.setFill(Color.valueOf("#ffff"));
+        border.setFill(Color.valueOf("#ffff"));
         innerTile.setFill(light ? Color.valueOf("#feb") : Color.valueOf("#582"));
 
+        bindInnerTile();
 
+        getChildren().addAll(border, innerTile);
 
-        innerTile.xProperty().bind(bg.xProperty().add(bg.widthProperty().multiply(0.05)));
-        innerTile.yProperty().bind(bg.yProperty().add(bg.heightProperty().multiply(0.05)));
-        innerTile.widthProperty().bind(bg.widthProperty().multiply(0.95));
-        innerTile.heightProperty().bind(bg.heightProperty().multiply(0.95));
+    }
 
-        getChildren().addAll(bg, innerTile);
-
+    public void bindInnerTile(){
+        innerTile.xProperty().bind(border.xProperty().add(border.widthProperty().multiply(0.05)));
+        innerTile.yProperty().bind(border.yProperty().add(border.heightProperty().multiply(0.05)));
+        innerTile.widthProperty().bind(border.widthProperty().multiply(0.95));
+        innerTile.heightProperty().bind(border.heightProperty().multiply(0.95));
     }
 
     /**
@@ -97,38 +99,38 @@ public class Tile extends StackPane {
     }
 
     /**
-     * Getter for bg
+     * Getter for border
      *
-     * @return bg
+     * @return border
      */
     public Rectangle getBg() {
-        return bg;
+        return border;
     }
 
     /**
-     * Setter for bg
+     * Setter for border
      *
-     * @param bg - bg
+     * @param border - border
      */
-    public void setBg(Rectangle bg) {
-        this.bg = bg;
+    public void setBg(Rectangle border) {
+        this.border = border;
     }
 
     public double getX(){
-        return bg.getX();
+        return border.getX();
     }
 
     public double getY(){
-        return bg.getY();
+        return border.getY();
     }
 
     public void setBorder(Paint paint){
-        bg.setFill(paint);
+        border.setFill(paint);
     }
 
     private Piece piece;
     private boolean hasPiece;
     private Rectangle innerTile;
-    private Rectangle bg;
+    private Rectangle border;
 
 }
