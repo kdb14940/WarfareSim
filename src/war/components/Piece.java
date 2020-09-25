@@ -100,7 +100,26 @@ public class Piece extends StackPane {
         this.unit = unit;
     }
 
+    /**
+     * Getter for tile
+     *
+     * @return tile
+     */
+    public Tile getTile() {
+        return tile;
+    }
+
+    /**
+     * Setter for tile
+     *
+     * @param tile - tile
+     */
+    public void setTile(Tile tile) {
+        this.tile = tile;
+    }
+
     private final int TILE_SIZE = 60;
     private Ellipse bg;
     private Unit unit;
+    private Tile tile;
 }

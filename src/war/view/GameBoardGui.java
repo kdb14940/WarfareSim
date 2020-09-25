@@ -11,6 +11,8 @@ import war.model.Unit;
 
 public class GameBoardGui extends Gui{
 
+
+    //TODO Create Rank Labels
     public GameBoardGui() {
         initComponents();
         layoutComponents();
